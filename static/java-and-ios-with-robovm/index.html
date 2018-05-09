@@ -1,3 +1,4 @@
+
 <head>
 
     <meta charset="utf-8">
@@ -7,12 +8,12 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=36474f5acf">
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="http://localhost:2368/java-and-ios-with-robovm/">
+    <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <link rel="amphtml" href="http://localhost:2368/java-and-ios-with-robovm/amp/">
+    <link rel="amphtml" href="amp/index.html">
     
     <meta property="og:site_name" content="Coding Ricky">
     <meta property="og:type" content="article">
@@ -43,7 +44,12 @@
     "publisher": {
         "@type": "Organization",
         "name": "Coding Ricky",
-        "logo": "http://localhost:2368/favicon.ico"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
     },
     "author": {
         "@type": "Person",
@@ -70,7 +76,7 @@
 }
     </script>
 
-    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+    <script src="../public/ghost-sdk.js?v=36474f5acf"></script>
 <script>
 ghost.init({
 	clientId: "ghost-frontend",
@@ -78,7 +84,7 @@ ghost.init({
 });
 </script>
     <meta name="generator" content="Ghost 1.22">
-    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="../rss/index.html">
 
 </head>
 <body class="post-template tag-java tag-ios tag-robovm tag-eclipse tag-xcode">
@@ -91,9 +97,9 @@ ghost.init({
     <div class="inner">
         <nav class="site-nav">
     <div class="site-nav-left">
-                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+                <a class="site-nav-logo" href="../">Coding Ricky</a>
             <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
 </ul>
 
     </div>
@@ -138,11 +144,11 @@ ghost.init({
 <li>XCode 5.1.1</li>
 </ul>
 <p>Firstly, within Eclipse, install the RoboVM plugin, under Help, Install New Software, <a href="http://download.robovm.org/eclipse/">http://download.robovm.org/eclipse/</a>. This will need to restart the IDE.</p>
-<p><img src="http://localhost:2373/content/images/2014/Jun/install-window.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jun/install-window.png" alt=""></p>
 <p>With the plugin installed, you can create a new project. Select the <em>'RoboVM iOS Project'</em> option.</p>
-<p><img src="http://localhost:2373/content/images/2014/Jun/robovm-ios-project.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jun/robovm-ios-project.png" alt=""></p>
 <p>Just use <em>'HelloWorld'</em> as the <em>project name</em>, <em>Main class</em>, <em>App name</em> and <em>App id</em>. It should look like the screenshot below.</p>
-<p><img src="http://localhost:2373/content/images/2014/Jun/HelloWorld.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jun/HelloWorld.png" alt=""></p>
 <p>For some reason, when I use the wizard, the <em>Main Class</em> does not get created, so this needs to be done manually. So create a class called <em>HelloWorld</em>.</p>
 <p>Put the following contents in the <em>HelloWorld</em> class.</p>
 <pre><code class="language-java">import org.robovm.apple.foundation.NSAutoreleasePool;
@@ -183,7 +189,7 @@ public class HelloWorld extends UIApplicationDelegateAdapter {
 </code></pre>
 <p>Most of the code above should be pretty self explanatory. The arguments into the construction of the <em>CGRect</em> class are the x and y co-ordinate followed by the label's width and height.</p>
 <p>If you right click the project and select <em>Run as/iOS Simulator App (iPhone)</em>. You should be presented with an iOS simulator with a green screen with the text "Hello World". Something like the screenshot below.</p>
-<p><img src="http://localhost:2373/content/images/2014/Jun/Green-Hello-World.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jun/Green-Hello-World.png" alt=""></p>
 <p>If you have reached this point, it means your environment has been setup correctly and you should be able to start developing iOS applications with Java.</p>
 <p>Here are some references for more information. I hope this post has been useful in showing you the first steps to iOS development using Java.</p>
 <ul>
@@ -311,7 +317,7 @@ public class HelloWorld extends UIApplicationDelegateAdapter {
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="http://localhost:2368">
+        <a href="../">
             <span>Coding Ricky</span>
         </a>
     </div>
@@ -341,9 +347,9 @@ public class HelloWorld extends UIApplicationDelegateAdapter {
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <section class="copyright"><a href="../">Coding Ricky</a> © 2018</section>
                 <nav class="site-footer-nav">
-                    <a href="http://localhost:2368">Latest Posts</a>
+                    <a href="../">Latest Posts</a>
                     
                     
                     <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
@@ -356,7 +362,7 @@ public class HelloWorld extends UIApplicationDelegateAdapter {
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=36474f5acf"></script>
 
 
     <script>

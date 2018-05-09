@@ -1,3 +1,4 @@
+
 <head>
 
     <meta charset="utf-8">
@@ -7,12 +8,12 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=36474f5acf">
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="http://localhost:2368/dropwizard-and-guice-integration/">
+    <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <link rel="amphtml" href="http://localhost:2368/dropwizard-and-guice-integration/amp/">
+    <link rel="amphtml" href="amp/index.html">
     
     <meta property="og:site_name" content="Coding Ricky">
     <meta property="og:type" content="article">
@@ -35,7 +36,12 @@
     "publisher": {
         "@type": "Organization",
         "name": "Coding Ricky",
-        "logo": "http://localhost:2368/favicon.ico"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
     },
     "author": {
         "@type": "Person",
@@ -61,7 +67,7 @@
 }
     </script>
 
-    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+    <script src="../public/ghost-sdk.js?v=36474f5acf"></script>
 <script>
 ghost.init({
 	clientId: "ghost-frontend",
@@ -69,7 +75,7 @@ ghost.init({
 });
 </script>
     <meta name="generator" content="Ghost 1.22">
-    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="../rss/index.html">
 
 </head>
 <body class="post-template">
@@ -82,9 +88,9 @@ ghost.init({
     <div class="inner">
         <nav class="site-nav">
     <div class="site-nav-left">
-                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+                <a class="site-nav-logo" href="../">Coding Ricky</a>
             <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
 </ul>
 
     </div>
@@ -114,7 +120,7 @@ ghost.init({
 
             <section class="post-full-content">
                 <div class="kg-card-markdown"><p><a href="https://dropwizard.github.io/dropwizard/">Dropwizard</a>, as described on their website is a <em>"Java framework for developing ops-friendly, high-performance, RESTful web services."</em> I have been using it recently after seeing it mentioned on my company's Yammer feed (funnily enough the framework emerged itself from Yammer) and have been enjoying it very much. One of the things I integrated into my setup of Dropwizard was <a href="https://github.com/google/guice">Guice</a>, as quite quickly I found I needed a way to inject my dependencies. The rest of this article will be devoted into showing you how to glue Dropwizard and Guice together.</p>
-<p><img src="http://localhost:2373/content/images/2014/Aug/dropwizard-logo.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Aug/dropwizard-logo.png" alt=""></p>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
 <li>Working JDK (I'm using Java 1.8)</li>
@@ -290,7 +296,7 @@ public class ServerApplication extends Application&lt;ServerConfiguration&gt; {
 <pre><code class="language-shell">$ java -jar target/DropWizardGuice-1.0-SNAPSHOT.jar server config.yml
 </code></pre>
 <p>If the application starts up correctly, you should be able to go to a browser and hit the url, <strong><a href="http://localhost:8080/hello">http://localhost:8080/hello</a></strong></p>
-<p><img src="http://localhost:2373/content/images/2014/Aug/message.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Aug/message.png" alt=""></p>
 <h3 id="summary">Summary</h3>
 <p>Thanks for reading, I hope this article was useful to you. Here are some references that were used in this article.</p>
 <ul>
@@ -394,7 +400,7 @@ public class ServerApplication extends Application&lt;ServerConfiguration&gt; {
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="http://localhost:2368">
+        <a href="../">
             <span>Coding Ricky</span>
         </a>
     </div>
@@ -424,9 +430,9 @@ public class ServerApplication extends Application&lt;ServerConfiguration&gt; {
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <section class="copyright"><a href="../">Coding Ricky</a> © 2018</section>
                 <nav class="site-footer-nav">
-                    <a href="http://localhost:2368">Latest Posts</a>
+                    <a href="../">Latest Posts</a>
                     
                     
                     <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
@@ -439,7 +445,7 @@ public class ServerApplication extends Application&lt;ServerConfiguration&gt; {
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=36474f5acf"></script>
 
 
     <script>

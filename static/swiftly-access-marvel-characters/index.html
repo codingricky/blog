@@ -1,3 +1,4 @@
+
 <head>
 
     <meta charset="utf-8">
@@ -7,12 +8,12 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=36474f5acf">
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="http://localhost:2368/swiftly-access-marvel-characters/">
+    <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <link rel="amphtml" href="http://localhost:2368/swiftly-access-marvel-characters/amp/">
+    <link rel="amphtml" href="amp/index.html">
     
     <meta property="og:site_name" content="Coding Ricky">
     <meta property="og:type" content="article">
@@ -43,7 +44,12 @@
     "publisher": {
         "@type": "Organization",
         "name": "Coding Ricky",
-        "logo": "http://localhost:2368/favicon.ico"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
     },
     "author": {
         "@type": "Person",
@@ -70,7 +76,7 @@
 }
     </script>
 
-    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+    <script src="../public/ghost-sdk.js?v=36474f5acf"></script>
 <script>
 ghost.init({
 	clientId: "ghost-frontend",
@@ -78,7 +84,7 @@ ghost.init({
 });
 </script>
     <meta name="generator" content="Ghost 1.22">
-    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="../rss/index.html">
 
 </head>
 <body class="post-template tag-marvel tag-rest tag-swift tag-ios-2 tag-json">
@@ -91,9 +97,9 @@ ghost.init({
     <div class="inner">
         <nav class="site-nav">
     <div class="site-nav-left">
-                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+                <a class="site-nav-logo" href="../">Coding Ricky</a>
             <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
 </ul>
 
     </div>
@@ -134,7 +140,7 @@ pod 'SwiftHTTP', :git =&gt; "https://github.com/daltoniam/SwiftHTTP.git", :tag =
 pod 'JSONJoy-Swift', :git =&gt; "https://github.com/daltoniam/JSONJoy-Swift.git", :tag =&gt; "0.9.1"
 </code></pre>
 <p>Once setup, I added a simple iOS view with an UIImageView and a <strong>download</strong> button.</p>
-<p><img src="http://localhost:2373/content/images/2015/01/sample-app-1.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2015/01/sample-app-1.png" alt=""></p>
 <p>What the application will do, is upon clicking the download button, we will access the API, download the details of <a href="http://en.wikipedia.org/wiki/Ant-Man">'Ant Man'</a> and set his thumbnail to the image view.</p>
 <p>1.We will access the details of 'Ant Man' via the Comic Character API. To get his details we will issue an HTTP GET request to <a href="http://gateway.marvel.com:80/v1/public/characters/">http://gateway.marvel.com:80/v1/public/characters/</a> with a few parameters:</p>
 <ul>
@@ -300,7 +306,7 @@ struct Character : JSONJoy {
     }
 </code></pre>
 <p>We should be able to run our application, click download and see <strong>Ant-Man</strong> in all his glory.</p>
-<p><img src="http://localhost:2373/content/images/2015/01/iOS-Simulator-Screen-Shot-27-Jan-2015-11-21-31-pm.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2015/01/iOS-Simulator-Screen-Shot-27-Jan-2015-11-21-31-pm.png" alt=""></p>
 <p>So that's it. Hopefully you have seen enough to get started using the Marvel api in a Swift application. Good luck creating your own application that uses the wonderful Marvel universe.</p>
 <p>Here are some references:</p>
 <ul>
@@ -425,7 +431,7 @@ struct Character : JSONJoy {
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="http://localhost:2368">
+        <a href="../">
             <span>Coding Ricky</span>
         </a>
     </div>
@@ -455,9 +461,9 @@ struct Character : JSONJoy {
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <section class="copyright"><a href="../">Coding Ricky</a> © 2018</section>
                 <nav class="site-footer-nav">
-                    <a href="http://localhost:2368">Latest Posts</a>
+                    <a href="../">Latest Posts</a>
                     
                     
                     <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
@@ -470,7 +476,7 @@ struct Character : JSONJoy {
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=36474f5acf"></script>
 
 
     <script>

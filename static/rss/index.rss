@@ -1,0 +1,1097 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Coding Ricky</title><description>A blog documenting Ricky Yim's software adventures.</description><link>http://localhost:2368/</link><image><url>http://localhost:2368/favicon.png</url><title>Coding Ricky</title><link>http://localhost:2368/</link></image><generator>Ghost 1.22</generator><lastBuildDate>Wed, 09 May 2018 22:47:19 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Keeping it all together with the Maven Shade Plugin</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;a href="https://github.com/DiUS/java-faker"&gt;Java Faker&lt;/a&gt; is an open source project that I maintain. It is a port of the Ruby faker gem and it exists to generate fake but realistic data. So we can insert phrases like &lt;em&gt;&amp;quot;The fool doth think he is wise, but the wise man knows himself to be&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/keeping-it-all-together-with-the-maven-shade-plugin/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088fa</guid><category>maven</category><category>faker</category><category>maven shade</category><dc:creator>Ricky Yim</dc:creator><pubDate>Sat, 07 May 2016 01:50:38 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;a href="https://github.com/DiUS/java-faker"&gt;Java Faker&lt;/a&gt; is an open source project that I maintain. It is a port of the Ruby faker gem and it exists to generate fake but realistic data. So we can insert phrases like &lt;em&gt;&amp;quot;The fool doth think he is wise, but the wise man knows himself to be a fool&amp;quot;&lt;/em&gt; into our application instead of &lt;em&gt;&amp;quot;Lorem ipsum have a nice day.&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;One of the things that is constantly on my mind is how to keep the bar to use the library as low as possible. This is to keep its adoption rate as high as possible. Hence why in travis I still have it compiling against Java 1.6.&lt;/p&gt;
+&lt;p&gt;A constant feature that I get asked about is Android support. And the one thing that holds it back is the YAML parser used. It's &lt;a href="https://bitbucket.org/asomov/snakeyaml"&gt;SnakeYAML&lt;/a&gt; and it has a dependency to javabeans which does not exist in Android Java land therefore meaning the Faker library doesn't work on Android.&lt;/p&gt;
+&lt;p&gt;However I recently discovered a fork of the &lt;a href="https://github.com/bmoliveira/snake-yaml"&gt;SnakeYAML&lt;/a&gt; that supports Android. My initial thinking was to simply replace the library with the Android compliant version, run tests and if everything passed, make the change and move on. However the downside was that the jar file wasn't published to the central maven repository. So as one &lt;a href="https://github.com/PascalSchumacher"&gt;committer&lt;/a&gt; to the project highlighted to me this could cause grief for people using the library who worked in environments that blocked access to non standard maven repositories like &lt;a href="http://jitpack.io"&gt;http://jitpack.io&lt;/a&gt;. This committer also provided a solution. He suggested the &lt;a href="https://github.com/PascalSchumacher"&gt;Maven Shade plugin&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;What this plugin does is provide the option to encapsulate multiple jars together to publish an even bigger jar at the end. By including the Android SnakeYAML jar at build time means that users of the faker jar don't need to download it themselves.&lt;/p&gt;
+&lt;p&gt;Here are the steps to achieve this. Youa add the maven shade plugin to your pom.xml and tell it which dependency you want to include. Simple as that.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;lt;plugin&amp;gt;
+                &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
+                &amp;lt;artifactId&amp;gt;maven-shade-plugin&amp;lt;/artifactId&amp;gt;
+                &amp;lt;version&amp;gt;2.4.3&amp;lt;/version&amp;gt;
+                &amp;lt;configuration&amp;gt;
+                    &amp;lt;artifactSet&amp;gt;
+                        &amp;lt;includes&amp;gt;
+                            &amp;lt;include&amp;gt;com.github.bmoliveira:snake-yaml&amp;lt;/include&amp;gt;
+                        &amp;lt;/includes&amp;gt;
+                    &amp;lt;/artifactSet&amp;gt;
+                &amp;lt;/configuration&amp;gt;
+                &amp;lt;executions&amp;gt;
+                    &amp;lt;execution&amp;gt;
+                        &amp;lt;phase&amp;gt;package&amp;lt;/phase&amp;gt;
+                        &amp;lt;goals&amp;gt;
+                            &amp;lt;goal&amp;gt;shade&amp;lt;/goal&amp;gt;
+                        &amp;lt;/goals&amp;gt;
+                    &amp;lt;/execution&amp;gt;
+                &amp;lt;/executions&amp;gt;
+            &amp;lt;/plugin&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if you proceed to run &lt;strong&gt;mvn package&lt;/strong&gt; your jar file should be bigger and contain an extra jar file in there.&lt;/p&gt;
+&lt;p&gt;I hope this tip was handy for you. It's a simple one that may be useful in your travels.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Using WatchKit tables</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/watchkit-tables/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f8</guid><category>swift</category><category>ios</category><category>watchkit</category><category>apple watch</category><category>table</category><dc:creator>Ricky Yim</dc:creator><pubDate>Sat, 25 Apr 2015 12:29:19 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a table on a watch using the WatchKit components.&lt;/p&gt;
+&lt;p&gt;These are the pre-requisites for this article:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Git&lt;/li&gt;
+&lt;li&gt;XCode 6.3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The application will be a simple table showing a list of names and ages of people.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/04/Bezel-Snapshot-2015-04-25-22-18-24.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;1.Start by checking out the src code from &lt;a href="https://github.com/codingricky/sample-watchkit-table"&gt;https://github.com/codingricky/sample-watchkit-table&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;2.If you go to the &lt;strong&gt;Interface.storyboard&lt;/strong&gt; of WatchTable WatchKit app, you will see a very basic scene with a table.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/04/storyboard.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;Important to note that the TableRowController has a custom class the &lt;strong&gt;TableRow&lt;/strong&gt;. There are outlets attached from the labels to the &lt;strong&gt;TableRow&lt;/strong&gt; class.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;TableRow&lt;/strong&gt; class looks like:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;import WatchKit
+
+class TableRow: NSObject {
+    @IBOutlet weak var nameLabel: WKInterfaceLabel!   
+    @IBOutlet weak var ageLabel: WKInterfaceLabel!
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also the identifier of the Table is set to &lt;strong&gt;tableRow&lt;/strong&gt; which will be referenced later on.&lt;/p&gt;
+&lt;p&gt;3.Open the &lt;strong&gt;InterfaceController&lt;/strong&gt; class.&lt;/p&gt;
+&lt;p&gt;We will define a map with some sample data that will be displayed in the watch table. Obviously you can source data from anywhere. The map is purely to simplfy things in this article.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    let personData = [&amp;quot;Taylor&amp;quot; : 25, &amp;quot;Katy&amp;quot; : 30, &amp;quot;Ellie&amp;quot; : 28]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4.In the &lt;strong&gt;willActivate()&lt;/strong&gt; fuction we will load the data into the table.&lt;/p&gt;
+&lt;p&gt;We will set the row count of the table like this.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;        table.setNumberOfRows(personData.count, withRowType: &amp;quot;tableRow&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice how the row identifier &lt;strong&gt;tableRow&lt;/strong&gt; is referenced.&lt;/p&gt;
+&lt;p&gt;5.Lastly we load the data into the table.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;   let keys = personData.keys.array
+        for (index, key) in enumerate(keys) {
+            let tableRow = table.rowControllerAtIndex(index) as! TableRow
+            tableRow.nameLabel.setText(key)
+            tableRow.ageLabel.setText(personData[key]!.description)
+        }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if you start the application, you will see the watch with the data loaded. You can source the data from anywhere. I hope that helps you on your way to building watch applications.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Typhoon - Dependency Injection with Swift</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Dependency Injection is a useful design pattern that allows for an application to be decoupled and it simplifies testing.  It is used in the Java world with frameworks like &lt;a href="http://projects.spring.io/spring-framework/"&gt;Spring&lt;/a&gt; and &lt;a href="https://github.com/google/guice"&gt;Guice&lt;/a&gt;. In Swift one Dependency Injection container is &lt;a href="http://typhoonframework.org/"&gt;Typhoon&lt;/a&gt;. This article will show how to incorporate Typhoon in an&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/typhoon-dependency-injection-with-swift/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f7</guid><category>Dependency Injection</category><category>marvel</category><category>swift</category><category>typhoon</category><dc:creator>Ricky Yim</dc:creator><pubDate>Tue, 14 Apr 2015 04:18:56 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Dependency Injection is a useful design pattern that allows for an application to be decoupled and it simplifies testing.  It is used in the Java world with frameworks like &lt;a href="http://projects.spring.io/spring-framework/"&gt;Spring&lt;/a&gt; and &lt;a href="https://github.com/google/guice"&gt;Guice&lt;/a&gt;. In Swift one Dependency Injection container is &lt;a href="http://typhoonframework.org/"&gt;Typhoon&lt;/a&gt;. This article will show how to incorporate Typhoon in an application.&lt;/p&gt;
+&lt;p&gt;Let's start with the code from &lt;a href="http://codingricky.com/swiftly-access-marvel-characters/"&gt;this article&lt;/a&gt;. It is a very simple application that accesses the developer API of &lt;a href="https://developer.marvel.com/"&gt;Marvel&lt;/a&gt; to download images of a character.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/04/dependency-injection.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;ViewController&lt;/strong&gt; class uses a &lt;strong&gt;MarvelService&lt;/strong&gt; which has three properties; public key, private key and url. The &lt;strong&gt;MarvelService&lt;/strong&gt; is the class that is responsible for interfacing with the Marvel API. Our first step will be injecting the MarvelService into the ViewController.&lt;/p&gt;
+&lt;p&gt;To get the sample code running, you will need a few things installed first.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Prerequisites&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;XCode 6.3&lt;/li&gt;
+&lt;li&gt;Cocoapods&lt;/li&gt;
+&lt;li&gt;Git&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;1.Checkout the code from &lt;a href="https://github.com/codingricky/marvel-sample"&gt;github&lt;/a&gt; and use the &lt;strong&gt;typhoon&lt;/strong&gt; branch. The dependencies have be defined in &lt;strong&gt;Podfile&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;2.Open the project and look inside the &lt;strong&gt;ViewController&lt;/strong&gt; class and the &lt;strong&gt;download&lt;/strong&gt; method.&lt;/p&gt;
+&lt;p&gt;It will look like the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt; 		var marvelService = MarvelService()
+         marvelService.download(name!, completeCallback: {(image: UIImage) in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.imageView.image = image
+            }
+        })
+        
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.We will now get Typhoon to dependency inject the &lt;strong&gt;MarvelService&lt;/strong&gt; dependency.&lt;/p&gt;
+&lt;p&gt;Open up the &lt;strong&gt;ViewController&lt;/strong&gt; class and create a couple of properties that will be injected.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;
+class ViewController: UIViewController {
+
+    @IBOutlet weak var imageView: UIImageView!
+    var marvelService: MarvelService?
+    var name: String?
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is the updated &lt;strong&gt;download&lt;/strong&gt; method.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;@IBAction func download(sender: AnyObject) {
+        marvelService!.download(name!, completeCallback: {(image: UIImage) in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.imageView.image = image
+            }
+        })
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4.Let's change the &lt;strong&gt;MarvelService&lt;/strong&gt; so that its properties can be dependency injected.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class MarvelService :NSObject {
+    var publicKey: String?
+    var privateKey: String?
+    var url: String?
+
+...
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also you will need to change the &lt;strong&gt;download&lt;/strong&gt; function to deal with the optionals of the properties.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;func download(name: String, completeCallback: UIImage -&amp;gt; () ) {
+        var request = HTTPTask()
+        request.responseSerializer = JSONResponseSerializer()
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = &amp;quot;\(ts)\(privateKey!)\(publicKey!)&amp;quot;.md5()
+        
+        request.GET(url!, parameters: [&amp;quot;nameStartsWith&amp;quot;: name, &amp;quot;apikey&amp;quot;: publicKey!, &amp;quot;ts&amp;quot; : ts, &amp;quot;hash&amp;quot;: hash], success: { (response: HTTPResponse) -&amp;gt; Void in
+            if (response.responseObject != nil) {
+                let character = Character(JSONDecoder(response.responseObject!))
+                self.downloadCharacterImage(character, completeCallback: completeCallback)
+            }
+            },failure: {(error: NSError, response: HTTPResponse?) -&amp;gt; Void in
+                println(&amp;quot;got an error: \(error)&amp;quot;)
+        })
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5.Create a &lt;strong&gt;configuration.plist&lt;/strong&gt; file that will contain the String properties of the application.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&amp;gt;
+&amp;lt;plist version=&amp;quot;1.0&amp;quot;&amp;gt;
+&amp;lt;dict&amp;gt;
+	&amp;lt;key&amp;gt;url&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;http://gateway.marvel.com:80/v1/public/characters&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;api.public.key&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;FILL IN YOUR OWN&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;api.private.key&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;FILL IN YOUR OWN&amp;lt;/string&amp;gt;
+    &amp;lt;key&amp;gt;name&amp;lt;/key&amp;gt;
+    &amp;lt;string&amp;gt;Ant-Man&amp;lt;/string&amp;gt;
+&amp;lt;/dict&amp;gt;
+&amp;lt;/plist&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make sure you fill in your own public and private keys that you get from the &lt;a href="http://developer.marvel.com"&gt;http://developer.marvel.com&lt;/a&gt; site.&lt;/p&gt;
+&lt;p&gt;6.The last piece is defining the Typhoon assembly. This is where the configuration of the dependencies will take place.&lt;/p&gt;
+&lt;p&gt;We will define 3 dependencies in the assembly the marvel Service, config and viewController. Open up the &lt;strong&gt;MarvelAssembly&lt;/strong&gt; class.&lt;/p&gt;
+&lt;p&gt;The configuration is defined as the follows. This will make the properties available to be injected in the &lt;strong&gt;Configuration.plist&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;        public dynamic func config() -&amp;gt; AnyObject {
+            return TyphoonDefinition.configDefinitionWithName(&amp;quot;Configuration.plist&amp;quot;)
+        }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let's define the &lt;strong&gt;MarvelService&lt;/strong&gt; and its dependencies.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;        public dynamic func marvelService() -&amp;gt; AnyObject {
+            return TyphoonDefinition.withClass(MarvelService.self) {
+                    (definition) in
+                        definition.injectProperty(&amp;quot;url&amp;quot;, with:TyphoonConfig(&amp;quot;url&amp;quot;))
+                        definition.injectProperty(&amp;quot;publicKey&amp;quot;, with:TyphoonConfig(&amp;quot;api.public.key&amp;quot;))
+                        definition.injectProperty(&amp;quot;privateKey&amp;quot;, with:TyphoonConfig(&amp;quot;api.private.key&amp;quot;))
+            }
+        }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The last class is the &lt;strong&gt;ViewController&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;
+        public dynamic func viewController() -&amp;gt; AnyObject {
+            return TyphoonDefinition.withClass(ViewController.self) {
+                (definition) in
+                    definition.injectProperty(&amp;quot;marvelService&amp;quot;, with:self.marvelService())
+                    definition.injectProperty(&amp;quot;name&amp;quot;, with:TyphoonConfig(&amp;quot;name&amp;quot;))
+        
+                    definition.scope = TyphoonScope.Singleton
+            }
+        }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This article has shown you how to take an dependency and inject its dependencies. This is a much more flexible and testable way of dealing with dependencies.&lt;/p&gt;
+&lt;p&gt;Here are some references.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://typhoonframework.org/"&gt;Typhoon&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://en.wikipedia.org/wiki/Dependency_injection"&gt;Dependency Injection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://developer.marvel.com"&gt;Developer Marvel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://codingricky.com/swiftly-access-marvel-characters/"&gt;Swiftly access Marvel characters&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Introduction to Garmin's Connect IQ</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Late last year, Garmin announced a development platform for their wearables. This enabled software developers to build applications for Garmin watches. This opens up a whole host of possibilties in how people use their watches. This article will explain the various types of applications that can be built for the&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/garmins-connect-iq/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f6</guid><dc:creator>Ricky Yim</dc:creator><pubDate>Mon, 30 Mar 2015 23:52:30 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Late last year, Garmin announced a development platform for their wearables. This enabled software developers to build applications for Garmin watches. This opens up a whole host of possibilties in how people use their watches. This article will explain the various types of applications that can be built for the platform.&lt;/p&gt;
+&lt;p&gt;Currently there are four watches which support the Connect IQ platform (920XT, Epix, Fenix 3 and Vivoactive). Garmin defines four distinct types of applications that can be developed, watch faces, data fields, widgets and apps.  I will describe each one.&lt;/p&gt;
+&lt;h6 id="whatcanyoubuild"&gt;What can you build?&lt;/h6&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/03/application-types.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;1.Watch Faces&lt;/p&gt;
+&lt;p&gt;Watch faces are designed to tell the time. They are restrictive as they can not access the GPS or use BLE to connect to the internet via a phone. They should be always-on hence the forementioned restrictions. This helps converse the battery of the watch.&lt;/p&gt;
+&lt;p&gt;2.Data Fields&lt;/p&gt;
+&lt;p&gt;Data Fields are used in activities to display to the user what is occuring in the activity. Data fields could be speed, distance and time. A custom data field can take any of these data fields and produce a new field all together. One of the first custom data fields that is often written is a calorie to beer conversion showing users how many beers they have burned during their activity!&lt;/p&gt;
+&lt;p&gt;3.Widgets&lt;/p&gt;
+&lt;p&gt;Similar to widgets in the iOS and Android land, widgets in the Garmin world are designed to show information at a glance to the user. They are a &amp;quot;swipe&amp;quot; away from the watch face. They are allowed to use the GPS and the phone to access the internet as they are not meant to be on all the time. Garmin provides a weather widget and a music remote widget to control the music on your phone.&lt;/p&gt;
+&lt;p&gt;4.Apps&lt;/p&gt;
+&lt;p&gt;These are the least restrictive type of applications that you can build. They need to be explicitly launched. They have access to everything that is possible on the phone from the accelerometer to the GPS to the internet. You can access Heart Rate Monitors and Powermeters via ANT+ and BLE.&lt;/p&gt;
+&lt;h6 id="howtodistributeyourapps"&gt;How to distribute your apps?&lt;/h6&gt;
+&lt;p&gt;Garmin have setup the Connect IQ Store to distribute your apps. There is no monetization model behind the store so all apps are distributed free. Garmin do suggest that you can charge for web services but this is handled outside their app store.&lt;/p&gt;
+&lt;p&gt;This article gave you a quick introduction into the types of apps that can be built for the Connect IQ platform. The next article in this series will explore the development tools and build a very simple application.&lt;/p&gt;
+&lt;p&gt;Here are some references:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://developer.garmin.com/connect-iq/overview"&gt;Garmin Connect IQ APIs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://apps.garmin.com"&gt;Garmin Connect IQ Store&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Swiftly access Marvel Characters</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an &lt;a href="http://developer.marvel.com/"&gt;API&lt;/a&gt; that allowed access to all things from their characters to comics to events. This article will show&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/swiftly-access-marvel-characters/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f5</guid><category>marvel</category><category>rest</category><category>swift</category><category>ios</category><category>JSON</category><dc:creator>Ricky Yim</dc:creator><pubDate>Tue, 27 Jan 2015 12:37:06 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an &lt;a href="http://developer.marvel.com/"&gt;API&lt;/a&gt; that allowed access to all things from their characters to comics to events. This article will show how to access the Marvel API from within an iOS application written in Swift.&lt;/p&gt;
+&lt;p&gt;The first thing you need to do is sign up for a developer's account at the &lt;a href="http://developer.marvel.com/"&gt;http://developer.marvel.com/&lt;/a&gt;. This will give you public/private keys and access to their documentation. The keys are required to access the API.&lt;/p&gt;
+&lt;p&gt;My starting point was a vanilla iOS 'Single View Application'. I used &lt;a href="http://cocoapods.org/"&gt;cocoapods&lt;/a&gt; to setup the dependencies. For this application I chose to leverage &lt;a href="https://github.com/daltoniam/SwiftHTTP"&gt;SwiftHttp&lt;/a&gt; for the HTTP communications and &lt;a href="https://github.com/daltoniam/JSONJoy-Swift"&gt;JSONJoy-Swift&lt;/a&gt; to map the JSON response back to a Swift structure.&lt;/p&gt;
+&lt;p&gt;My podfile looks like this.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.1'
+
+pod 'SwiftHTTP', :git =&amp;gt; &amp;quot;https://github.com/daltoniam/SwiftHTTP.git&amp;quot;, :tag =&amp;gt; &amp;quot;0.9.1&amp;quot;
+pod 'JSONJoy-Swift', :git =&amp;gt; &amp;quot;https://github.com/daltoniam/JSONJoy-Swift.git&amp;quot;, :tag =&amp;gt; &amp;quot;0.9.1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once setup, I added a simple iOS view with an UIImageView and a &lt;strong&gt;download&lt;/strong&gt; button.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/01/sample-app-1.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;What the application will do, is upon clicking the download button, we will access the API, download the details of &lt;a href="http://en.wikipedia.org/wiki/Ant-Man"&gt;'Ant Man'&lt;/a&gt; and set his thumbnail to the image view.&lt;/p&gt;
+&lt;p&gt;1.We will access the details of 'Ant Man' via the Comic Character API. To get his details we will issue an HTTP GET request to &lt;a href="http://gateway.marvel.com:80/v1/public/characters/"&gt;http://gateway.marvel.com:80/v1/public/characters/&lt;/a&gt; with a few parameters:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;his name&lt;/li&gt;
+&lt;li&gt;api key (the public key)&lt;/li&gt;
+&lt;li&gt;ts (the timestamp or a value that changes per request)&lt;/li&gt;
+&lt;li&gt;hash (an md5 hash of the ts + public key + private key)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More details of the API can be found &lt;a href="http://developer.marvel.com/docs#!/public/getCreatorCollection_get_0"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.Define an &lt;strong&gt;IBAction&lt;/strong&gt; for the download button. Within the action, we will create the HTTP request and initiate the download.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;
+    @IBAction func download(sender: AnyObject) {
+
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the import statement to the top of the &lt;strong&gt;ViewController&lt;/strong&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;import SwiftHTTP
+import JSONJoy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To create a HTTP request we need to create a &lt;strong&gt;HTTPTask&lt;/strong&gt;. Our first iteration of the method will look like this.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;    @IBAction func download(sender: AnyObject) {
+        let name = &amp;quot;Ant-Man&amp;quot;
+        let url = &amp;quot;http://gateway.marvel.com:80/v1/public/characters&amp;quot;
+        var request = HTTPTask()
+        let publicKey = &amp;quot;YOUR PUBLIC KEY&amp;quot;
+        let ts = NSDate().timeIntervalSince1970.description
+        
+        request.GET(url, parameters: [&amp;quot;nameStartsWith&amp;quot;: name, &amp;quot;apikey&amp;quot;: publicKey, &amp;quot;ts&amp;quot; : ts], success: { (response: HTTPResponse) -&amp;gt; Void in
+            println(&amp;quot;got a response: \(response.responseObject)&amp;quot;)
+        },{(error: NSError, response: HTTPResponse?) -&amp;gt; Void in
+            println(&amp;quot;got an error: \(error)&amp;quot;)
+        })
+      }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fill in your public key with the public key from your developer account. We're using the &lt;strong&gt;nameStartsWith&lt;/strong&gt; parameter to retrieve &lt;strong&gt;Ant-Man&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;3.The request won't work unless we hash the private key and pass it as a parameter. To do this will need to apply an MD5 hash to the timestamp concatenated with the public key and private key. To perform an MD5 hash in Swift I used this &lt;a href="https://gist.github.com/finder39/f6d71f03661f7147547d"&gt;gist&lt;/a&gt; which extends the String class to add an MD5 method.&lt;/p&gt;
+&lt;p&gt;So create a file called &amp;quot;Swift-MD5.swift&amp;quot; and add the contents of the &lt;a href="https://gist.github.com/finder39/f6d71f03661f7147547d"&gt;gist&lt;/a&gt; in there. You will need to add a bridging header file to import &lt;strong&gt;CommonCrypto/CommonCrypto.h&lt;/strong&gt; which is required for the MD5 hashing.&lt;/p&gt;
+&lt;p&gt;We can create a hash for our request now.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;        let publicKey = &amp;quot;YOUR PUBLIC KEY&amp;quot;
+        let privateKey = &amp;quot;YOUR PRIVARE KEY&amp;quot;
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = &amp;quot;\(ts)\(privateKey)\(publicKey)&amp;quot;.md5()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4.Putting this together our &lt;strong&gt;download&lt;/strong&gt; function will look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;    @IBAction func download(sender: AnyObject) {
+        let name = &amp;quot;Ant-Man&amp;quot;
+        let url = &amp;quot;http://gateway.marvel.com:80/v1/public/characters&amp;quot;
+        var request = HTTPTask()
+        let publicKey = &amp;quot;YOUR PUBLIC KEY&amp;quot;
+        let privateKey = &amp;quot;YOUR PRIVARE KEY&amp;quot;
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = &amp;quot;\(ts)\(privateKey)\(publicKey)&amp;quot;.md5()
+        
+        request.GET(url, parameters: [&amp;quot;nameStartsWith&amp;quot;: name, &amp;quot;apikey&amp;quot;: publicKey, &amp;quot;ts&amp;quot; : ts], success: { (response: HTTPResponse) -&amp;gt; Void in
+            println(&amp;quot;got a response: \(response.responseObject)&amp;quot;)
+        },{(error: NSError, response: HTTPResponse?) -&amp;gt; Void in
+            println(&amp;quot;got an error: \(error)&amp;quot;)
+        })
+      }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Starting up the application and pressing the &lt;strong&gt;download&lt;/strong&gt; button will initiate the request. This will result in text outputted like below in the console.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;got a response: Optional({
+    attributionHTML = &amp;quot;&amp;lt;a href=\&amp;quot;http://marvel.com\&amp;quot;&amp;gt;Data provided by Marvel. \U00a9 2015 MARVEL&amp;lt;/a&amp;gt;&amp;quot;;
+    attributionText = &amp;quot;Data provided by Marvel. \U00a9 2015 MARVEL&amp;quot;;
+    code = 200;
+    copyright = &amp;quot;\U00a9 2015 MARVEL&amp;quot;;
+    data =     {
+        count = 2;
+        limit = 20;
+        offset = 0;
+        results =     
+        ...
+            etag = b38bb16e6d445c247e1edb3b5decde4f3caa1b2d;
+    status = Ok;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5.To do something meaningful with the output we will parse it and convert it into a struct so we can use the data. Let's define the struct class.&lt;/p&gt;
+&lt;p&gt;So create a file called &lt;strong&gt;Character.swift&lt;/strong&gt;. Add the fields that we will parse from the response. The file should resemble the contents below:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;
+import Foundation
+import JSONJoy
+
+struct Character : JSONJoy {
+    var status: String?
+    var code: Int?
+    var thumbnail: String?
+    
+    init() {
+    }
+     
+    init(_ decoder: JSONDecoder) {
+        status = decoder[&amp;quot;status&amp;quot;].string
+        code = decoder[&amp;quot;code&amp;quot;].integer
+        if let arr = decoder[&amp;quot;data&amp;quot;][&amp;quot;results&amp;quot;].array {
+            let path = arr[0][&amp;quot;thumbnail&amp;quot;][&amp;quot;path&amp;quot;].string
+            let fileExtension = arr[0][&amp;quot;thumbnail&amp;quot;][&amp;quot;extension&amp;quot;].string
+            thumbnail = &amp;quot;\(path!).\(fileExtension!)&amp;quot;
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We are using &lt;a href="https://github.com/daltoniam/JSONJoy-Swift"&gt;JSONJoy-Swift&lt;/a&gt; to parse the response. The code takes the response according to the documentation and assigns it to the fields in the struct.&lt;/p&gt;
+&lt;p&gt;Now in our download method, we need to parse the response into a &lt;strong&gt;Character&lt;/strong&gt; struct.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;@IBAction func download(sender: AnyObject) {
+        let name = &amp;quot;Ant-Man&amp;quot;
+        let url = &amp;quot;http://gateway.marvel.com:80/v1/public/characters&amp;quot;
+        var request = HTTPTask()
+        request.responseSerializer = JSONResponseSerializer()
+        let publicKey = &amp;quot;YOUR PUBLIC KEY&amp;quot;
+        let privateKey = &amp;quot;YOUR PRIVATE KEY&amp;quot;
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = &amp;quot;\(ts)\(privateKey)\(publicKey)&amp;quot;.md5()
+        
+        request.GET(url, parameters: [&amp;quot;nameStartsWith&amp;quot;: name, &amp;quot;apikey&amp;quot;: publicKey, &amp;quot;ts&amp;quot; : ts, &amp;quot;hash&amp;quot;: hash], success: { (response: HTTPResponse) -&amp;gt; Void in
+            if (response.responseObject != nil) {
+                let character = Character(JSONDecoder(response.responseObject!))
+            }
+        },{(error: NSError, response: HTTPResponse?) -&amp;gt; Void in
+            println(&amp;quot;got an error: \(error)&amp;quot;)
+        })
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We've added the responseSerializer to be a &lt;strong&gt;JSONResponseSerializer&lt;/strong&gt;. And we've converted the response to be a &lt;strong&gt;Character&lt;/strong&gt; struct.&lt;/p&gt;
+&lt;p&gt;6.The last piece of the puzzle is to download the &lt;strong&gt;thumbnail&lt;/strong&gt; and assign it to the UIImageView. For this we will use &lt;strong&gt;SwiftHTTP&lt;/strong&gt; and download the image using that. We will add a method that takes a &lt;strong&gt;Character&lt;/strong&gt; struct, downloads the thumbnail and assigns it to the UIImageView. I'm not going to go into too much detail with this method as it really is about how to use &lt;strong&gt;SwiftHTTP&lt;/strong&gt; as opposed to how to use the Marvel API which is the point of this article.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;func downloadCharacter(character: Character) {
+        var request = HTTPTask()
+        let downloadTask = request.download(character.thumbnail!, parameters: nil, progress: {(complete: Double) in
+            println(&amp;quot;percent complete: \(complete)&amp;quot;)
+            }, success: {(response: HTTPResponse) in
+                println(&amp;quot;download finished!&amp;quot;)
+                if response.responseObject != nil {
+                    let data = NSData(contentsOfURL: response.responseObject! as NSURL)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.imageView.image = UIImage(data: data!)
+                    }
+                }
+                
+            } ,failure: {(error: NSError, response: HTTPResponse?) in
+                println(&amp;quot;failure&amp;quot;)
+        })
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that the assignment of the imageView happens on the main thread. This is the correct way to update any view object.&lt;/p&gt;
+&lt;p&gt;7.So if we put everything together now. We can invoke the &lt;strong&gt;downloadCharacter&lt;/strong&gt; function from our &lt;strong&gt;download&lt;/strong&gt; function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;@IBAction func download(sender: AnyObject) {
+        let name = &amp;quot;Ant-Man&amp;quot;
+        let url = &amp;quot;http://gateway.marvel.com:80/v1/public/characters&amp;quot;
+        var request = HTTPTask()
+        request.responseSerializer = JSONResponseSerializer()
+        let publicKey = &amp;quot;YOUR PUBLIC KEY&amp;quot;
+        let privateKey = &amp;quot;YOUR PRIVATE KEY&amp;quot;
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = &amp;quot;\(ts)\(privateKey)\(publicKey)&amp;quot;.md5()
+        
+        request.GET(url, parameters: [&amp;quot;nameStartsWith&amp;quot;: name, &amp;quot;apikey&amp;quot;: publicKey, &amp;quot;ts&amp;quot; : ts, &amp;quot;hash&amp;quot;: hash], success: { (response: HTTPResponse) -&amp;gt; Void in
+            if (response.responseObject != nil) {
+                let character = Character(JSONDecoder(response.responseObject!))
+                self.downloadCharacter(character)
+            }
+        },{(error: NSError, response: HTTPResponse?) -&amp;gt; Void in
+            println(&amp;quot;got an error: \(error)&amp;quot;)
+        })
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We should be able to run our application, click download and see &lt;strong&gt;Ant-Man&lt;/strong&gt; in all his glory.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2015/01/iOS-Simulator-Screen-Shot-27-Jan-2015-11-21-31-pm.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;So that's it. Hopefully you have seen enough to get started using the Marvel api in a Swift application. Good luck creating your own application that uses the wonderful Marvel universe.&lt;/p&gt;
+&lt;p&gt;Here are some references:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://developer.marvel.com/"&gt;Marvel Developer API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/codingricky/marvel-sample"&gt;Sample source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://gist.github.com/finder39/f6d71f03661f7147547d"&gt;Gist for MD5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://en.wikipedia.org/wiki/Ant-Man"&gt;Ant Man&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/daltoniam/SwiftHTTP"&gt;SwiftHttp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/daltoniam/JSONJoy-Swift"&gt;JSONJoy-Swift&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Play-ing with Dependency Injection</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;A few months ago I wrote about the &lt;a href="http://codingricky.com/guicing-up-the-play-framework-dependency-injection-with-guice-and-play/"&gt;lack of Dependency Injection in Play&lt;/a&gt;. As part of the 2.4 release of Play, Dependency Injection has been incorporated as part of the framework. &lt;a href="https://jcp.org/aboutJava/communityprocess/final/jsr330/"&gt;JSR 330&lt;/a&gt; is now implemented using &lt;a href="https://github.com/google/guice"&gt;Guice&lt;/a&gt;. This article will demonstrate how to use it. As a&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/dependency-injection-with-the-play-framework/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f4</guid><category>Play</category><category>Guice</category><category>Dependency Injection</category><dc:creator>Ricky Yim</dc:creator><pubDate>Mon, 08 Dec 2014 04:18:25 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;A few months ago I wrote about the &lt;a href="http://codingricky.com/guicing-up-the-play-framework-dependency-injection-with-guice-and-play/"&gt;lack of Dependency Injection in Play&lt;/a&gt;. As part of the 2.4 release of Play, Dependency Injection has been incorporated as part of the framework. &lt;a href="https://jcp.org/aboutJava/communityprocess/final/jsr330/"&gt;JSR 330&lt;/a&gt; is now implemented using &lt;a href="https://github.com/google/guice"&gt;Guice&lt;/a&gt;. This article will demonstrate how to use it. As a reference point, I will be using the same example as the one used in &lt;a href="http://codingricky.com/guicing-up-the-play-framework-dependency-injection-with-guice-and-play/"&gt;my previous article&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that this article uses a non final release of the &lt;a href="https://github.com/playframework/playframework/releases/tag/2.4.0-M2"&gt;Play Framework 2.4 (2.4.0-M2)&lt;/a&gt; so part of the framework may change before the final release.&lt;/p&gt;
+&lt;p&gt;Assuming you have the Play Framework already installed and you have created a sample application. If you require help, please refer to the instructions &lt;a href="https://www.playframework.com/documentation/2.4.x/NewApplication"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;1.Create a simple service that we will be injecting into our controller. First create an interface at the path &lt;strong&gt;app/services/GreetingService.java&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package services;
+
+public interface GreetingService {  
+    String greeting();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Followed up by its implementation &lt;strong&gt;app/services/RealGreetingService.java&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package services;
+
+public class RealGreetingService implements GreetingService {  
+    @Override
+    public String greeting() {
+        return &amp;quot;bonjour&amp;quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2.Back in the &lt;strong&gt;GreetingService&lt;/strong&gt; interface, add the &lt;strong&gt;@ImplementedBy&lt;/strong&gt; Guice annotation to it.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;@ImplementedBy(RealGreetingService.class)
+public interface GreetingService {
+  public String greeting();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.Go to the Application controller and inject the &lt;strong&gt;GreetingService&lt;/strong&gt; into it. The key things here are the instance variable with the &lt;strong&gt;@Inject&lt;/strong&gt; annotation and the controller index method not being static anymore, as it needs access to the &lt;strong&gt;greetingService&lt;/strong&gt; instance variable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;public class Application extends Controller {
+  private final GreetingService greetingService;
+
+  @Inject
+  public Application(GreetingService greetingService) {
+    this.greetingService = greetingService;
+  }
+
+  public Result index() {
+    return ok(index.render(greetingService.greeting()));
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4.Start the application and go to the website at &lt;a href="http://localhost:9000"&gt;http://localhost:9000&lt;/a&gt;. It should look like this.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/12/bonjour-1.jpg" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;I've upload the sample application here on &lt;a href="https://github.com/codingricky/play-di-java"&gt;https://github.com/codingricky/play-di-java&lt;/a&gt;. As you can see, it is much simplier now that DI has been incorporated directly into the framework.&lt;/p&gt;
+&lt;h3 id="references"&gt;References###&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://codingricky.com/guicing-up-the-play-framework-dependency-injection-with-guice-and-play/"&gt;Guicing up the Play Framework - Dependency Injection with Guice and Play&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jcp.org/aboutJava/communityprocess/final/jsr330/"&gt;JSR 330&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/google/guice"&gt;Google Guice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.playframework.com/documentation/2.4.0-M2/JavaDependencyInjection"&gt;Dependency injection with Play&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Faking Data</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;It's showcase time, your application has been deployed and the product owner comes around the corner. The login screen loads up but you realise there's no data in the system. Valuable seconds tick by and yet you can't think of any creative customer names besides from &amp;quot;John Smith&amp;quot;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/faking-it/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f2</guid><category>java</category><category>testing</category><category>faker</category><dc:creator>Ricky Yim</dc:creator><pubDate>Fri, 28 Nov 2014 11:06:56 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;It's showcase time, your application has been deployed and the product owner comes around the corner. The login screen loads up but you realise there's no data in the system. Valuable seconds tick by and yet you can't think of any creative customer names besides from &amp;quot;John Smith&amp;quot; and &amp;quot;Jane Doe.&amp;quot;&lt;/p&gt;
+&lt;p&gt;Enter the &lt;a href="http://dius.github.io/java-faker/"&gt;Java Faker library&lt;/a&gt;. This is a port of the popular &lt;a href="https://github.com/stympy/faker"&gt;Ruby Faker gem&lt;/a&gt;. The idea behind the library is very simple. It generates fake data. The library actually came out of a software project developed by my company &lt;a href="http://www.dius.com.au"&gt;DiUS Computing&lt;/a&gt;. We used it to generate data for showcases. The rest of this article will show how this library is used.&lt;/p&gt;
+&lt;p&gt;1.The first thing you need to do is add the dependency to your build tool. This example uses maven.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;com.github.javafaker&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;javafaker&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;0.5&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2.With the dependency resolved, you can begin to use the library.&lt;/p&gt;
+&lt;p&gt;Start by instaniating an instance of the Faker.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;Faker faker = new Faker();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.Start creating fake data now. It is as simple as that.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;String name = faker.name().fullName();
+String streetAddress = faker.address().streetAddress();
+String emailAddress = faker.internet().emailAddress();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Look at the &lt;a href="http://dius.github.io/java-faker/apidocs/index.html"&gt;javadocs&lt;/a&gt; for examples of what fake data can be generated.&lt;/p&gt;
+&lt;p&gt;I'm the current maintainer of the library, so if you have any ideas on how to make the library better or  any proposed changes, let me know or send me a pull request. Happy Faking!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DiUS/java-faker"&gt;Github page for Java Faker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://dius.github.io/java-faker/apidocs/index.html"&gt;Javadocs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/stympy/faker"&gt;Ruby faker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Calabash-ing iOS applications</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Automated acceptance testing is a standard and common practice when developing web applications. One of the most popular frameworks is &lt;a href="http://cukes.info/"&gt;Cucumber&lt;/a&gt; and it is easy to integrate this into Ruby on Rails and Java applications. However, nowadays it is just as easy to use these frameworks with native mobile applications.&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/calabash-ing-ios-applications/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f1</guid><category>Cucumber</category><category>testing</category><category>ios</category><category>calabash</category><dc:creator>Ricky Yim</dc:creator><pubDate>Thu, 30 Oct 2014 00:20:14 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Automated acceptance testing is a standard and common practice when developing web applications. One of the most popular frameworks is &lt;a href="http://cukes.info/"&gt;Cucumber&lt;/a&gt; and it is easy to integrate this into Ruby on Rails and Java applications. However, nowadays it is just as easy to use these frameworks with native mobile applications. This article will take a trivial application written in Swift and show how it is possible to use a framework like &lt;a href="http://http://calaba.sh/"&gt;Calabash&lt;/a&gt; and begin writing automated acceptance tests.&lt;/p&gt;
+&lt;p&gt;Before proceeding, these are the pre-requistes required to run the software described in this article:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Xcode 6.1&lt;/li&gt;
+&lt;li&gt;Git&lt;/li&gt;
+&lt;li&gt;Ruby&lt;/li&gt;
+&lt;li&gt;Rubygems&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="todolists"&gt;To Do Lists&lt;/h4&gt;
+&lt;p&gt;The application that we will add acceptance tests to is a simple To Do List. The source code can be found &lt;a href="https://github.com/codingricky/todoSwift"&gt;here&lt;/a&gt;. I forked an existing &lt;a href="https://github.com/IcaliaLabs/todoSwift"&gt;application&lt;/a&gt; and made a few minor modifications.&lt;/p&gt;
+&lt;p&gt;1 . Checkout the repository, you should be by default on the &lt;strong&gt;initial&lt;/strong&gt; branch.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/codingricky/todoSwift
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2 . Open the file &lt;strong&gt;SingleTodo.xcodeproj&lt;/strong&gt; in Xcode. Compile and run this.&lt;/p&gt;
+&lt;p&gt;You should be presented with an application that looks like the following:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/10/iOS-Simulator-Screen-Shot-29-Oct-2014-9-45-29-pm.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;Clicking &lt;strong&gt;Add&lt;/strong&gt; will add a task. Clicking &lt;strong&gt;Done&lt;/strong&gt; will remove any checked tasks.&lt;/p&gt;
+&lt;p&gt;Now that we have a functioning application, let's add some tests.&lt;/p&gt;
+&lt;h3 id="calabash"&gt;Calabash&lt;/h3&gt;
+&lt;p&gt;Calabash is one of many acceptance testing frameworks for iOS. It is the one that I have found most easy to use. Given my background with Rails and Cucumber, the transition was seamless as Cucumber is supported in the Calabash framework. One of the negatives of Calabash is that it requires a separate version of the application to be built, as it embeds an HTTP Server in the application. This enables the automation magic to happen.&lt;/p&gt;
+&lt;p&gt;3 . Calabash is distributed as a gem. Issue the following command in a terminal.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gem install calabash-cucumber --no-ri --no-rdoc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;4 . Install the Calabash framework into the Xcode project by executing the following command in the directory that you cloned the git repository.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ calabash-ios setup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will add another scheme called &lt;strong&gt;SingleTodo-cal&lt;/strong&gt; to the Xcode project. It will add in the calabash.framework directory too.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ ls -al
+total 32
+drwxr-xr-x  10 ricky  staff   340 30 Oct 11:31 .
+drwxr-xr-x   4 ricky  staff   136 30 Oct 11:25 ..
+drwxr-xr-x  13 ricky  staff   442 30 Oct 11:32 .git
+-rw-r--r--   1 ricky  staff   289 30 Oct 11:25 .gitignore
+-rw-r--r--   1 ricky  staff    57 30 Oct 11:25 .travis.yml
+-rw-r--r--   1 ricky  staff  1478 30 Oct 11:25 README.md
+drwxr-xr-x  12 ricky  staff   408 30 Oct 11:25 SingleTodo
+drwxr-xr-x   5 ricky  staff   170 30 Oct 11:25 SingleTodo.xcodeproj
+-rwxr-xr-x   1 ricky  staff    92 30 Oct 11:25 build.sh
+drwxr-xr-x   6 ricky  staff   204 24 Oct 13:10 calabash.framework
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5 . Generate a sample feature file. Run the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ calabash-ios gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will have generated the following files.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ ls features/
+my_first.feature	step_definitions	support
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;6 . Build the &lt;strong&gt;SingleTodo-cal&lt;/strong&gt; scheme in Xcode. Run the sample test.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cucumber
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will execute the feature against the simulator. An actual simulator will pop up. The output in the terminal should resemble the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Feature: Running a test
+  As an iOS developer
+  I want to have a sample feature file
+  So I can begin testing quickly
+
+  Scenario: Example steps                            # features/my_first.feature:6
+    Given I am on the Welcome Screen                 # features/step_definitions/my_first_steps.rb:1
+    Then I swipe left                                # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:234
+    And I wait until I don't see &amp;quot;Please swipe left&amp;quot; # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:165
+    And take picture                                 # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:229
+
+1 scenario (1 passed)
+4 steps (4 passed)
+0m31.562s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="actualtest"&gt;Actual Test&lt;/h3&gt;
+&lt;p&gt;It is fine having a sample test however let's write a test that is a bit more relevant to the application.&lt;/p&gt;
+&lt;p&gt;To keep things simple, we will use the &lt;a href="https://github.com/calabash/calabash-ios/wiki/02-Predefined-step"&gt;predefined steps&lt;/a&gt; in Cucumber/Calabash. The test will add a task and assert that it has been added.&lt;/p&gt;
+&lt;p&gt;7 . Create a new feature file and delete the sample one.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ touch features/todo.feature
+$ rm features/my_first.feature
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;8 . Edit your new file (&lt;strong&gt;features/todo.feature&lt;/strong&gt;) in your preferred editor. Paste the following into the file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Feature: Todo list application can add tasks
+  As a user
+  I want to add tasks
+  So I can remember to do things
+
+Scenario: Add Task
+  Given I am on the Welcome Screen
+  When I touch &amp;quot;Add&amp;quot;
+  And I fill in &amp;quot;TaskDescription&amp;quot; with &amp;quot;listening to Taylor Swift&amp;quot;
+  And I touch &amp;quot;Add task&amp;quot;
+  Then I wait for &amp;quot;listening to Taylor Swift&amp;quot; to appear
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The test is pretty self explanatory. There are a couple of things to note. Firstly, the &lt;strong&gt;&amp;quot;When I touch&amp;quot;&lt;/strong&gt; steps use the label of the button. The &lt;strong&gt;&amp;quot;fill in&amp;quot;&lt;/strong&gt; step uses an Accessibility Label. Since we're learning Swift we might as well be listening to some Swift.&lt;/p&gt;
+&lt;p&gt;9 . Run cucumber again, the scenario should execute.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cucumber
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Output should resemble the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Feature: Todo list application can add tasks
+  As a user
+  I want to add tasks
+  So I can remember to do things
+
+  Scenario: Add Task                                                 # features/todo.feature:6
+    Given I am on the Welcome Screen                                 # features/step_definitions/my_first_steps.rb:1
+    When I touch &amp;quot;Add&amp;quot;                                               # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:15
+    And I fill in &amp;quot;TaskDescription&amp;quot; with &amp;quot;listening to Taylor Swift&amp;quot; # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:114
+    And I touch &amp;quot;Add task&amp;quot;                                           # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:15
+    Then I wait for &amp;quot;listening to Taylor Swift&amp;quot; to appear            # calabash-cucumber-0.11.3/features/step_definitions/calabash_steps.rb:174
+
+1 scenario (1 passed)
+5 steps (5 passed)
+0m34.296s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
+&lt;p&gt;So now you've seen how easy it is to get up and running with Calabash and iOS applications. You can easily build up a suite of tests with this approach and ensure the quality of your application remains high.&lt;/p&gt;
+&lt;p&gt;In future articles, I will build upon this example, so keep an eye out!&lt;/p&gt;
+&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/calabash/calabash-ios"&gt;https://github.com/calabash/calabash-ios&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://calaba.sh/"&gt;http://calaba.sh/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/calabash/calabash-ios/wiki/02-Predefined-step"&gt;https://github.com/calabash/calabash-ios/wiki/02-Predefined-step&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Swift and Objective-C, a Happy Couple</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One of the great features of using Apple's new programming language Swift, is that it and Objective-C are pretty much interoperable. I have done several iOS applications as an independant developer and they require a small amount of maintenance from time to time. Now, I was interested using Swift in&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/swift-and-objective-c-a-happy-couple/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088f0</guid><dc:creator>Ricky Yim</dc:creator><pubDate>Sun, 19 Oct 2014 21:43:59 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One of the great features of using Apple's new programming language Swift, is that it and Objective-C are pretty much interoperable. I have done several iOS applications as an independant developer and they require a small amount of maintenance from time to time. Now, I was interested using Swift in my application, but I did not want to rewrite it from scratch. So what I started doing, was slowly porting parts of the application that I touched, from Objective-C to Swift. Also I made sure that any new class that I introduced to the application would be written in Swift.&lt;/p&gt;
+&lt;p&gt;This approach allowed me to chip away slowly at the problem of converting the entire application over to Swift but also allowed me to do my maintenance work and any new feature development. This article will demonstrate the very simple manner in which a Swift class can be called from Objective-C.&lt;/p&gt;
+&lt;p&gt;I started with an Objective-C project (which can be found here &lt;a href="https://github.com/codingricky/interop-demo"&gt;https://github.com/codingricky/interop-demo&lt;/a&gt;). It is a Single View Application, and I will introduce a Swift class that will be invoked from an Objective-C Controller.&lt;/p&gt;
+&lt;p&gt;This is my Swift &lt;strong&gt;Message&lt;/strong&gt; class. It's intentionally simple. It returns a String that will be displayed on screen.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Message {
+    func message() -&amp;gt; String {
+        return &amp;quot;Hello&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To allow for Objective-C to invoke this Swift class, there are a couple of modifications that are required.&lt;/p&gt;
+&lt;p&gt;Firstly, let's add the &lt;strong&gt;@objc&lt;/strong&gt; annotation to the class to allow for the class to be made available to Objective-C.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;@objc class Message {
+    func message() -&amp;gt; String {
+        return &amp;quot;Hello&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we need to add in a class function so Objective-C can create new instances of this class.&lt;/p&gt;
+&lt;p&gt;So this is what our class looks like now.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;@objc class Message {
+    
+    class func newInstance() -&amp;gt; Message {
+        return Message()
+    }
+    
+    func message() -&amp;gt; String {
+        return &amp;quot;Hello&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Shifting our attention back to Objective-C, for any class that will interact with Swift, we need to import a special header file that is generated by Xcode. This is in the format of &lt;strong&gt;ProductName/ProductModuleName-Swift.h&lt;/strong&gt; which will make visible any of the classes/methods from Swift to Objective-C that have the correct annotations and/or modifiers.&lt;/p&gt;
+&lt;p&gt;So in my case, the import statement looks like the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-objective-c"&gt;import &amp;quot;Interop_Demo-Swift.h&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In my ViewController, we can use the Swift &lt;strong&gt;Message&lt;/strong&gt; class, we defined earlier.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-objective-c"&gt;- (void)viewDidLoad {
+    [super viewDidLoad];
+    Message *message = [Message newInstance];
+    NSString *messageString = [message message];
+
+    UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 240, 300, 30)];
+    headingLabel.text = messageString;
+    [self.view addSubview:headingLabel];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The application running in the simulator ends up looking like this.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Oct/iOS-Simulator-Screen-Shot-20-Oct-2014-8-41-47-am-1.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;Simple as that really. I hope this article showed you how easy it was to go between Swift and Objective-C, and potentially a way to migrate, piecemeal your application over from Objective-C to Swift.&lt;/p&gt;
+&lt;h4 id="references"&gt;References####&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Source code for this article &lt;a href="https://github.com/codingricky/interop-demo"&gt;https://github.com/codingricky/interop-demo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Apple's reference &lt;a href="https://developer.apple.com/library/ios/documentation/swift/conceptual/buildingcocoaapps/MixandMatch.html"&gt;https://developer.apple.com/library/ios/documentation/swift/conceptual/buildingcocoaapps/MixandMatch.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Dropwizard and Guice integration</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;a href="https://dropwizard.github.io/dropwizard/"&gt;Dropwizard&lt;/a&gt;, as described on their website is a &lt;em&gt;&amp;quot;Java framework for developing ops-friendly, high-performance, RESTful web services.&amp;quot;&lt;/em&gt; I have been using it recently after seeing it mentioned on my company's Yammer feed (funnily enough the framework emerged itself from Yammer) and have been enjoying it very much. One&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/dropwizard-and-guice-integration/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088ef</guid><dc:creator>Ricky Yim</dc:creator><pubDate>Mon, 04 Aug 2014 01:42:11 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;a href="https://dropwizard.github.io/dropwizard/"&gt;Dropwizard&lt;/a&gt;, as described on their website is a &lt;em&gt;&amp;quot;Java framework for developing ops-friendly, high-performance, RESTful web services.&amp;quot;&lt;/em&gt; I have been using it recently after seeing it mentioned on my company's Yammer feed (funnily enough the framework emerged itself from Yammer) and have been enjoying it very much. One of the things I integrated into my setup of Dropwizard was &lt;a href="https://github.com/google/guice"&gt;Guice&lt;/a&gt;, as quite quickly I found I needed a way to inject my dependencies. The rest of this article will be devoted into showing you how to glue Dropwizard and Guice together.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Aug/dropwizard-logo.png" alt=""&gt;&lt;/p&gt;
+&lt;h3 id="prerequisites"&gt;Prerequisites&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Working JDK (I'm using Java 1.8)&lt;/li&gt;
+&lt;li&gt;Maven 3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="gettingstarted"&gt;Getting started&lt;/h3&gt;
+&lt;p&gt;Start by using the Maven quickstart archetype to generate the shell of a Maven project. So in a terminal, perform the following command. Feel free to change the groupId and artifactId to suit your own purposes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=com.github.codingricky -DartifactId=DropWizardGuice -Dversion=1.0-SNAPSHOT
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now update the dependencies in the &lt;strong&gt;pom.xml&lt;/strong&gt; to include what is required for this article.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;
+    &amp;lt;dependencies&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;io.dropwizard&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;dropwizard-core&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;0.7.0&amp;lt;/version&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;com.hubspot.dropwizard&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;dropwizard-guice&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;0.7.0.2&amp;lt;/version&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;com.google.inject&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;guice&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;3.0&amp;lt;/version&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+    &amp;lt;/dependencies&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This adds in the &lt;strong&gt;dropwizard&lt;/strong&gt; framework, the &lt;strong&gt;dropwizard guice&lt;/strong&gt; extension and &lt;strong&gt;guice&lt;/strong&gt; itself.&lt;/p&gt;
+&lt;h3 id="addingconfiguration"&gt;Adding configuration&lt;/h3&gt;
+&lt;p&gt;What this demo will do, is take a message from the &lt;strong&gt;configuration yml file&lt;/strong&gt; and inject it as a dependency into a &lt;strong&gt;resource&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Let's now add a configuration class. This will be a &lt;strong&gt;dropwizard&lt;/strong&gt; configuration class so it will need to extend the &lt;strong&gt;io.dropwizard.Configuration&lt;/strong&gt; class. Add a &lt;strong&gt;message&lt;/strong&gt; field with corresponding getters/setters so dropwizard can get the message to inject into our resource.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package com.github.codingricky;
+
+import io.dropwizard.Configuration;
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class ServerConfiguration extends Configuration {
+    @NotEmpty
+    private String message;
+    public String getMessage() {
+        return message;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now create a &lt;strong&gt;config.yml&lt;/strong&gt; and add this message property in it. Put this in the root directory of the project, so at the same level as the &lt;strong&gt;pom.xml&lt;/strong&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml"&gt;message: &amp;quot;Bonjour&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="addingtheresource"&gt;Adding the resource&lt;/h3&gt;
+&lt;p&gt;The &lt;strong&gt;resource&lt;/strong&gt; in dropwizard speak represents the REST resource. It is the handler of the http request. We will create one that responds to the path &lt;strong&gt;/hello&lt;/strong&gt; and it will output our message from the &lt;strong&gt;config.yml&lt;/strong&gt; file. This is where &lt;strong&gt;Guice&lt;/strong&gt; will get involved. Create this class in &lt;strong&gt;src/main/java&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package com.github.codingricky;
+
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+@Path(&amp;quot;/hello&amp;quot;)
+public class HelloResource {
+    private final String message;
+
+    @Inject
+    public HelloResource(@Named(&amp;quot;message&amp;quot;) String message) {
+        this.message = message;
+    }
+
+    @GET
+    public String hello() {
+        return message;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This class now expects Guice to inject a &lt;strong&gt;@Named&lt;/strong&gt; property named &lt;strong&gt;message&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="nowtheguicemodule"&gt;Now the Guice module&lt;/h3&gt;
+&lt;p&gt;Now we need a bit of glue code that takes the message from the configuration file to make it available to &lt;strong&gt;Guice&lt;/strong&gt;. Create a &lt;strong&gt;ServerModule&lt;/strong&gt; that implements the &lt;strong&gt;com.google.inject.Module&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package com.github.codingricky;
+
+import com.google.inject.Binder;
+import com.google.inject.Module;
+import com.google.inject.Provides;
+
+import javax.inject.Named;
+
+public class ServerModule implements Module {
+    @Override
+    public void configure(Binder binder) {
+    }
+
+    @Provides
+    @Named(&amp;quot;message&amp;quot;)
+    public String provideMessage(ServerConfiguration serverConfiguration) {
+        return serverConfiguration.getMessage();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Take special note that of the &lt;strong&gt;provideMessage&lt;/strong&gt; that extracts the message from the &lt;strong&gt;ServerConfiguration&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="finallytheapplication"&gt;Finally the application&lt;/h3&gt;
+&lt;p&gt;Now we need to tie everything together. The application class will start the application and also will create a &lt;strong&gt;Guice bundle&lt;/strong&gt; that encapsules the &lt;strong&gt;ServerModule&lt;/strong&gt; and the &lt;strong&gt;ServerConfiguration&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-java"&gt;package com.github.codingricky;
+
+import com.hubspot.dropwizard.guice.GuiceBundle;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+
+public class ServerApplication extends Application&amp;lt;ServerConfiguration&amp;gt; {
+    @Override
+    public void initialize(Bootstrap&amp;lt;ServerConfiguration&amp;gt; bootstrap) {
+        GuiceBundle&amp;lt;ServerConfiguration&amp;gt; guiceBundle = GuiceBundle.&amp;lt;ServerConfiguration&amp;gt;newBuilder()
+                .addModule(new ServerModule())
+                .setConfigClass(ServerConfiguration.class)
+                .enableAutoConfig(getClass().getPackage().getName())
+                .build();
+        bootstrap.addBundle(guiceBundle);
+    }
+
+    @Override
+    public void run(ServerConfiguration configuration, Environment environment) throws Exception {
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        new ServerApplication().run(args);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="letsgo"&gt;Let's Go!&lt;/h3&gt;
+&lt;p&gt;The final step is to package everything up and run it.&lt;/p&gt;
+&lt;p&gt;So add in the plugin details that will package up the application and allow it to be run via the commandline.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;&amp;lt;plugins&amp;gt;
+            &amp;lt;plugin&amp;gt;
+                &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
+                &amp;lt;artifactId&amp;gt;maven-shade-plugin&amp;lt;/artifactId&amp;gt;
+                &amp;lt;version&amp;gt;1.6&amp;lt;/version&amp;gt;
+                &amp;lt;configuration&amp;gt;
+                    &amp;lt;createDependencyReducedPom&amp;gt;true&amp;lt;/createDependencyReducedPom&amp;gt;
+                    &amp;lt;filters&amp;gt;
+                        &amp;lt;filter&amp;gt;
+                            &amp;lt;artifact&amp;gt;*:*&amp;lt;/artifact&amp;gt;
+                            &amp;lt;excludes&amp;gt;
+                                &amp;lt;exclude&amp;gt;META-INF/*.SF&amp;lt;/exclude&amp;gt;
+                                &amp;lt;exclude&amp;gt;META-INF/*.DSA&amp;lt;/exclude&amp;gt;
+                                &amp;lt;exclude&amp;gt;META-INF/*.RSA&amp;lt;/exclude&amp;gt;
+                            &amp;lt;/excludes&amp;gt;
+                        &amp;lt;/filter&amp;gt;
+                    &amp;lt;/filters&amp;gt;
+                &amp;lt;/configuration&amp;gt;
+                &amp;lt;executions&amp;gt;
+                    &amp;lt;execution&amp;gt;
+                        &amp;lt;phase&amp;gt;package&amp;lt;/phase&amp;gt;
+                        &amp;lt;goals&amp;gt;
+                            &amp;lt;goal&amp;gt;shade&amp;lt;/goal&amp;gt;
+                        &amp;lt;/goals&amp;gt;
+                        &amp;lt;configuration&amp;gt;
+                            &amp;lt;transformers&amp;gt;
+                                &amp;lt;transformer implementation=&amp;quot;org.apache.maven.plugins.shade.resource.ServicesResourceTransformer&amp;quot;/&amp;gt;
+                                &amp;lt;transformer implementation=&amp;quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&amp;quot;&amp;gt;
+                                    &amp;lt;mainClass&amp;gt;com.github.codingricky.ServerApplication&amp;lt;/mainClass&amp;gt;
+                                &amp;lt;/transformer&amp;gt;
+                            &amp;lt;/transformers&amp;gt;
+                        &amp;lt;/configuration&amp;gt;
+                    &amp;lt;/execution&amp;gt;
+                &amp;lt;/executions&amp;gt;
+            &amp;lt;/plugin&amp;gt;
+        &amp;lt;/plugins&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can build everything via Maven.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ mvn clean install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally we can start the application&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;$ java -jar target/DropWizardGuice-1.0-SNAPSHOT.jar server config.yml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If the application starts up correctly, you should be able to go to a browser and hit the url, &lt;strong&gt;&lt;a href="http://localhost:8080/hello"&gt;http://localhost:8080/hello&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Aug/message.png" alt=""&gt;&lt;/p&gt;
+&lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
+&lt;p&gt;Thanks for reading, I hope this article was useful to you. Here are some references that were used in this article.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://dropwizard.github.io/dropwizard/"&gt;https://dropwizard.github.io/dropwizard/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/HubSpot/dropwizard-guice"&gt;https://github.com/HubSpot/dropwizard-guice&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Flipping Cards with Swift and UIKit</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One requirement I had recently was to display cards in an iPhone application and upon tapping on it, flip the card around. This article goes into details on how to do that with the help of Swift and UIKit.&lt;/p&gt;
+&lt;p&gt;Note that this article uses Swift as an example, so you&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/flipping-cards-with-swift-and-uikit/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088ee</guid><category>xcode</category><category>swift</category><category>ios</category><category>cards</category><category>uikit</category><dc:creator>Ricky Yim</dc:creator><pubDate>Wed, 30 Jul 2014 10:56:11 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One requirement I had recently was to display cards in an iPhone application and upon tapping on it, flip the card around. This article goes into details on how to do that with the help of Swift and UIKit.&lt;/p&gt;
+&lt;p&gt;Note that this article uses Swift as an example, so you will need an Xcode 6 beta that supports the language. Of course what is explained in this article can be done with Objective-C and an older version of Xcode.&lt;/p&gt;
+&lt;p&gt;First start by creating a barebones iPhone &amp;quot;Single View Application.&amp;quot; Then proceed to add the images (back.png and front.png) that will represent the cards into the XCode Project. Here they are:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Jul/back-1.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Jul/front-1.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;I found the images &lt;a href="http://www.ironstarmedia.co.uk/resources/free-game-assets/browse/graphics/sprites/Playing+Cards"&gt;here&lt;/a&gt;. They have an entire deck of cards as well, if required.&lt;/p&gt;
+&lt;p&gt;Let's start by showing just the back of the card. So in your &lt;strong&gt;ViewController.swift&lt;/strong&gt; declare the following attributes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class ViewController: UIViewController {
+    
+    var cardView: UIView!
+    var back: UIImageView!
+    var front: UIImageView!
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the &lt;strong&gt;viewDidLoad&lt;/strong&gt; function, we will dynamically create the &lt;strong&gt;cardView&lt;/strong&gt; and add the &lt;strong&gt;back&lt;/strong&gt; image of the card. This is the code that achieves that.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        front = UIImageView(image: UIImage(named: &amp;quot;front.png&amp;quot;))
+        back = UIImageView(image: UIImage(named: &amp;quot;back.png&amp;quot;))
+        let rect = CGRectMake(20, 20, back.image.size.width, back.image.size.height)
+        cardView = UIView(frame: rect)
+        cardView.addSubview(back)
+        view.addSubview(cardView)
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you run the application now, it should just show the back of the playing card like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2014/Jul/ios-simulator.png" alt=""&gt;&lt;/p&gt;
+&lt;p&gt;Lets go and add gesture recognition to the &lt;strong&gt;imageView&lt;/strong&gt; so it recognises when somebody taps on it.&lt;/p&gt;
+&lt;p&gt;You need to create a &lt;strong&gt;UITapGestureRecognizer&lt;/strong&gt; and pass a &lt;strong&gt;selector&lt;/strong&gt; into its initializer. So to do this, you will need to modify the &lt;strong&gt;viewDidLoad&lt;/strong&gt; function so that it resembles the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        back = UIImageView(image: UIImage(named: &amp;quot;back.png&amp;quot;))
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: Selector(&amp;quot;tapped&amp;quot;))
+        singleTap.numberOfTapsRequired = 1
+        
+        let rect = CGRectMake(20, 20, back.image.size.width, back.image.size.height)
+        cardView = UIView(frame: rect)
+        cardView.addGestureRecognizer(singleTap)
+        cardView.userInteractionEnabled = true
+        cardView.addSubview(back)
+        
+        view.addSubview(cardView)
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will call a &lt;strong&gt;tapped&lt;/strong&gt; function that doesn't exist yet. So let's add a function into the controller and simply make it write to the console.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;  func tapped() {
+   println(&amp;quot;tapped&amp;quot;)
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if we run the application, tapping upon the back of the playing card, should result in the message &lt;strong&gt;&amp;quot;tapped&amp;quot;&lt;/strong&gt; appearing in our console.&lt;/p&gt;
+&lt;p&gt;So now we can load up an image and it can recognise users tapping on it.&lt;/p&gt;
+&lt;p&gt;Let's add a variable to indicate which side of the card we are currently showing. So in the &lt;strong&gt;ViewController&lt;/strong&gt; add this instance variable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;    var showingBack = true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Default it to &lt;strong&gt;true&lt;/strong&gt; as we are displaying the back of the card first.&lt;/p&gt;
+&lt;p&gt;There's a class function on &lt;strong&gt;UIView&lt;/strong&gt; that allows transitions from one view to another one. This is precisely what we need.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;            UIView.transitionFromView(back, toView: front, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The function takes the from and to views, the duration the transition should take in seconds, options like the transition animation and a completion block. Under the covers it removes the fromView from its parent, and replaces it with the toView.&lt;/p&gt;
+&lt;p&gt;So if we put it together, it will look like this.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;
+    func tapped() {
+        if (showingBack) {
+            UIView.transitionFromView(back, toView: front, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+            showingBack = false
+        } else {
+            UIView.transitionFromView(front, toView: back, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+            showingBack = true
+        }
+
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you run the application, it should look like this.&lt;/p&gt;
+&lt;iframe width="420" height="315" src="//www.youtube.com/embed/AIgwab1o1c4" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;So that's it. All the source code to this blog can be found &lt;a href="https://github.com/codingricky/Swift-Flipping-Cards"&gt;here&lt;/a&gt; and thanks again to &lt;a href="http://www.ironstarmedia.co.uk"&gt;Iron Star Media&lt;/a&gt; for their card images.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Access Control in Swift</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Since Swift was released at WWDC this year, Apple have clearly stated the language is still in beta. This was proven by the fact that the last release, beta 4, introduced a new feature, &lt;em&gt;&amp;quot;Access Control.&amp;quot;&lt;/em&gt; Initially when Swift was released, this did seem like a glaring omission&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/access-control-in-swift/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088ed</guid><category>apple</category><category>swift</category><category>ios</category><category>access control</category><dc:creator>Ricky Yim</dc:creator><pubDate>Tue, 29 Jul 2014 02:28:47 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;Since Swift was released at WWDC this year, Apple have clearly stated the language is still in beta. This was proven by the fact that the last release, beta 4, introduced a new feature, &lt;em&gt;&amp;quot;Access Control.&amp;quot;&lt;/em&gt; Initially when Swift was released, this did seem like a glaring omission as almost every modern programming language today has some notion of Access Control.&lt;/p&gt;
+&lt;h3 id="3levels"&gt;3 levels&lt;/h3&gt;
+&lt;p&gt;Swift has 3 levels of Access Control.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt; - Access from only the same file&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;internal&lt;/strong&gt; - Access from the same module&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt; - Across modules&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let's start with &lt;strong&gt;private&lt;/strong&gt; the most restrictive one. This will stop anybody accessing anything that is not in the same file.&lt;/p&gt;
+&lt;p&gt;For example, if I had a &lt;strong&gt;Person&lt;/strong&gt; class with a &lt;strong&gt;name&lt;/strong&gt; variable that were &lt;strong&gt;private&lt;/strong&gt;, nobody else outside the file would be able to access it.&lt;/p&gt;
+&lt;p&gt;So in &lt;strong&gt;Person.swift&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    private let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And in &lt;strong&gt;main.swift&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;let person = Person(name: &amp;quot;John&amp;quot;)
+println(person.name) // compile error 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Removing the &lt;strong&gt;private&lt;/strong&gt; keyword from the variable, removes the compile error.&lt;/p&gt;
+&lt;p&gt;So again in &lt;strong&gt;Person.swift&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In &lt;strong&gt;main.swift&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;let person = Person(name: &amp;quot;John&amp;quot;)
+println(person.name) // prints out John
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="internal"&gt;Internal&lt;/h2&gt;
+&lt;p&gt;So when we removed the &lt;strong&gt;private&lt;/strong&gt; keyword from our &lt;strong&gt;Person.swift&lt;/strong&gt; class it had &lt;strong&gt;internal&lt;/strong&gt; scope by default. This is the same as adding the &lt;strong&gt;internal&lt;/strong&gt; keyword to the attribute.&lt;/p&gt;
+&lt;p&gt;In &lt;strong&gt;Person.swift&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    internal let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="public"&gt;Public&lt;/h2&gt;
+&lt;p&gt;Lastly, &lt;strong&gt;public&lt;/strong&gt; should be used with modules and when exposing APIs. So if you want your functions/attributes to be accessible across modules, then use the &lt;strong&gt;public&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
+&lt;p&gt;I hope you've learnt something about Swift's access controls in this post. Here are some references for further reading.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=5"&gt;https://developer.apple.com/swift/blog/?id=5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.apple.com/swift/"&gt;https://developer.apple.com/swift/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The source code for this post can be found here &lt;a href="https://github.com/codingricky/Swift-Access-Control-Demo"&gt;https://github.com/codingricky/Swift-Access-Control-Demo&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>You say Constructor Chaining, Swift says Initializer Delegation</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One of the things that one must get used to with a new language is dealing with new conventions. Now coming from mostly a Java and Ruby background, there is a notion of constructors and constructor chaining, basically when one constructor calls another one. So when it comes to Swift,&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/construtor-chaining-in-swift/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088eb</guid><category>swift</category><category>initializers</category><category>delegation</category><category>convenience</category><category>designated</category><category>ios</category><dc:creator>Ricky Yim</dc:creator><pubDate>Mon, 07 Jul 2014 12:27:18 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;One of the things that one must get used to with a new language is dealing with new conventions. Now coming from mostly a Java and Ruby background, there is a notion of constructors and constructor chaining, basically when one constructor calls another one. So when it comes to Swift, there are a few rules around the methods used to create objects.&lt;/p&gt;
+&lt;p&gt;Firstly, the &lt;a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_399"&gt;language guide&lt;/a&gt; refers to constructors as initializers. So basically anytime you want to use the term constructor, use the term initializer when you are in Swift land. More specifically, constructor chaining is known as initializer delegation.&lt;/p&gt;
+&lt;p&gt;Initializers fall into two categories, &lt;em&gt;Designated&lt;/em&gt; and &lt;em&gt;Convenience&lt;/em&gt;.  &lt;em&gt;Designated&lt;/em&gt; initializers are the primary initializers and are responsible for initializing all properties of a class. So in this case, the only initializer here is known as the &lt;em&gt;Designated&lt;/em&gt; one.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    let name: String
+    let age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if you want to add other initializers to delegate to the &lt;em&gt;Designated&lt;/em&gt; one, they will be known as &lt;em&gt;Convenience&lt;/em&gt; initializers. So let's add one that defaults the age. &lt;em&gt;Convenience&lt;/em&gt; initializers have the keyword &lt;em&gt;convenience&lt;/em&gt; before them.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    let name: String
+    let age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    convenience init(name: String) {
+        self.init(name: name, age: 100)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Convenience&lt;/em&gt; initializers need to delegate to another &lt;em&gt;Convenience&lt;/em&gt; initializer or a &lt;em&gt;Designated&lt;/em&gt; initializer.&lt;/p&gt;
+&lt;p&gt;Here's an example of a &lt;em&gt;Convenience&lt;/em&gt; initializer calling another &lt;em&gt;Convenience&lt;/em&gt; one.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    let name: String
+    let age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    convenience init(name: String) {
+        self.init(name: name, age: 30)
+    }
+
+    convenience init() {
+        self.init(name: &amp;quot;Homer&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you wanted to, you could create another &lt;em&gt;Designated&lt;/em&gt; initializer. Now we have two &lt;em&gt;Designated&lt;/em&gt; initializers and two &lt;em&gt;Convenience&lt;/em&gt; initializers.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Person {
+    let name: String
+    let age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    init(age: Int, name: String) {
+        self.age = age
+        self.name = name
+    }
+    
+    convenience init(name: String) {
+        self.init(name: name, age: 30)
+    }
+    
+    convenience init() {
+        self.init(name: &amp;quot;Homer&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="whataboutsubclasses"&gt;What about subclasses?&lt;/h3&gt;
+&lt;p&gt;Once again, with initializers, there are certain rules that need to be adhered to when subclassing. So &lt;em&gt;Designated&lt;/em&gt; initializers must call other &lt;em&gt;Designated&lt;/em&gt; initializers in their immediate parent class.&lt;/p&gt;
+&lt;p&gt;So let's take a look at an example. We are adding a Student class as a subclass of the Person class. It will add a property student number.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-swift"&gt;class Student : Person {
+    
+    let number: String
+   
+    init(name: String, age: Int, number: String) {
+        self.number = number
+        super.init(name: name, age: age)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we are calling the &lt;em&gt;Designated&lt;/em&gt; initializer in the Person class. If we tried to call one of the &lt;em&gt;Convenience&lt;/em&gt; initializers in the Person class, a compile error would occur. Also note, we need to assign the number property before calling the initializer in the parent class as it is a requirement to ensure all properties are initialized in child classes before their respective parent initializer is called.&lt;/p&gt;
+&lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
+&lt;p&gt;Basically in summary, as explained in the language guide, &lt;em&gt;Designated&lt;/em&gt; initializers delegate up and &lt;em&gt;Convenience&lt;/em&gt; initializers delegate across. I hope this article helped in some way to improve your understanding of initializers in Swift.&lt;/p&gt;
+&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_399"&gt;Swift Language Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item><item><title>Swift REPL</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;A Read-eval-print-loop (REPL) is a simple program that takes input and immediately gives user feedback. The new language from Apple, Swift comes complete with its own REPL shell. To use it follow these simple instructions in a terminal. This is assuming you already have Xcode6 installed.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;$ sudo xcode-select -s /Applications/&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;</description><link>http://localhost:2368/swift-repl/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088ec</guid><category>swift</category><category>repl</category><category>apple</category><dc:creator>Ricky Yim</dc:creator><pubDate>Fri, 27 Jun 2014 11:29:10 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;A Read-eval-print-loop (REPL) is a simple program that takes input and immediately gives user feedback. The new language from Apple, Swift comes complete with its own REPL shell. To use it follow these simple instructions in a terminal. This is assuming you already have Xcode6 installed.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;$ sudo xcode-select -s /Applications/Xcode6-Beta2.app/Contents/Developer/&lt;br&gt;
+Change the path to point to the version of Xcode you have installed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;$ xcrun swift&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Now should be in Swift's REPL and you can type commands that will be instantly executed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;$ var a = &amp;quot;hello&amp;quot;
+$ println(a)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Happy REPL-ing!&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>First impressions of Swift</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;strong&gt;First impressions of Swift&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I’ve spent most of my idle cycles over the last week or so having a closer look at Swift, the new Apple programming language that was announced recently at WWDC. Here is a quick summary of what I like and dislike so far. Mind you,&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/first-impressions-of-swift/</link><guid isPermaLink="false">5af2a0f92c5de64e5ef088ea</guid><dc:creator>Ricky Yim</dc:creator><pubDate>Mon, 16 Jun 2014 12:09:35 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;&lt;strong&gt;First impressions of Swift&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I’ve spent most of my idle cycles over the last week or so having a closer look at Swift, the new Apple programming language that was announced recently at WWDC. Here is a quick summary of what I like and dislike so far. Mind you, this is only after having a fairly brief look into Swift, so my opinions may change…&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Likes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Optional/Inferred Typing - I really like this feature. I wish Java would adopt something similar. From my point of view, less typing means less code means less bugs&lt;/li&gt;
+&lt;li&gt;No header files - I always felt that I was stuck in the 80s when I was programming Objective-C with header files. Now they’re not necessary in Swift. Function declaration and implementation in the one spot&lt;/li&gt;
+&lt;li&gt;let vs var - Allows the developer to enforce some degree of immutability in programs&lt;/li&gt;
+&lt;li&gt;Named arguments - Particularly in functions with long argument lists, this comes in very handy&lt;/li&gt;
+&lt;li&gt;String interpolation - A neat little feature for replacing arguments in Strings&lt;/li&gt;
+&lt;li&gt;String construction - I hated the whole @&amp;quot;String&amp;quot; business in Objective-C, this has been done with in Swift&lt;/li&gt;
+&lt;li&gt;Interoperability with Objective-C - A few times I’ve had to include Objective-C files into my Swift project. I must say the ease in which this was done was impressive. All I needed was to define an Objective-C Bridging/Header file and import the header files that I required&lt;/li&gt;
+&lt;li&gt;Readable - As Swift has a much closer relationship with modern languages like Scala and Ruby, I just find it much more readable than Objective-C&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Dislikes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ARC vs GC - Swift has support for Automatic Reference Counting (ARC) as opposed to Garbage Collection (GC). Granted ARC is a step up from leaving memory management entirely in the developer’s hands, however, I am concerned that there will be scenarios like (cyclic references) where developer’s will tie themselves in knots. I guess it is no different from Objective-C&lt;/li&gt;
+&lt;li&gt;Lack of scope - In most modern programming languages, there’s an ability to define scopes for your functions and variables. This is not possible with Swift and I’m sure this feature will be missed once projects become larger and you want to tightly control how objects interact with each other&lt;/li&gt;
+&lt;li&gt;Lack of data structures - Out of the box, Swift has support for 2 data structures, Array and Dictionary. I would have preferred several more like Stacks, Queues, Linked Lists, etc&lt;/li&gt;
+&lt;li&gt;Error handling - Typically there is some try/catch, begin/rescue syntax built into the language to handle exception/error handling. There’s none of this in the language. See here for a solution to this problem (&lt;a href="http://swiftlytyping.tumblr.com/post/88210131086/error-handling"&gt;http://swiftlytyping.tumblr.com/post/88210131086/error-handling&lt;/a&gt;). Still I think it's something that should really be in the language&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</content:encoded></item></channel></rss>

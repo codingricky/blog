@@ -1,3 +1,4 @@
+
 <head>
 
     <meta charset="utf-8">
@@ -7,12 +8,12 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=36474f5acf">
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="http://localhost:2368/flipping-cards-with-swift-and-uikit/">
+    <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <link rel="amphtml" href="http://localhost:2368/flipping-cards-with-swift-and-uikit/amp/">
+    <link rel="amphtml" href="amp/index.html">
     
     <meta property="og:site_name" content="Coding Ricky">
     <meta property="og:type" content="article">
@@ -43,7 +44,12 @@
     "publisher": {
         "@type": "Organization",
         "name": "Coding Ricky",
-        "logo": "http://localhost:2368/favicon.ico"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
     },
     "author": {
         "@type": "Person",
@@ -70,7 +76,7 @@
 }
     </script>
 
-    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+    <script src="../public/ghost-sdk.js?v=36474f5acf"></script>
 <script>
 ghost.init({
 	clientId: "ghost-frontend",
@@ -78,7 +84,7 @@ ghost.init({
 });
 </script>
     <meta name="generator" content="Ghost 1.22">
-    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="../rss/index.html">
 
 </head>
 <body class="post-template tag-xcode tag-swift tag-ios-2 tag-cards tag-uikit">
@@ -91,9 +97,9 @@ ghost.init({
     <div class="inner">
         <nav class="site-nav">
     <div class="site-nav-left">
-                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+                <a class="site-nav-logo" href="../">Coding Ricky</a>
             <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
 </ul>
 
     </div>
@@ -126,8 +132,8 @@ ghost.init({
                 <div class="kg-card-markdown"><p>One requirement I had recently was to display cards in an iPhone application and upon tapping on it, flip the card around. This article goes into details on how to do that with the help of Swift and UIKit.</p>
 <p>Note that this article uses Swift as an example, so you will need an Xcode 6 beta that supports the language. Of course what is explained in this article can be done with Objective-C and an older version of Xcode.</p>
 <p>First start by creating a barebones iPhone "Single View Application." Then proceed to add the images (back.png and front.png) that will represent the cards into the XCode Project. Here they are:</p>
-<p><img src="http://localhost:2373/content/images/2014/Jul/back-1.png" alt=""></p>
-<p><img src="http://localhost:2373/content/images/2014/Jul/front-1.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jul/back-1.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jul/front-1.png" alt=""></p>
 <p>I found the images <a href="http://www.ironstarmedia.co.uk/resources/free-game-assets/browse/graphics/sprites/Playing+Cards">here</a>. They have an entire deck of cards as well, if required.</p>
 <p>Let's start by showing just the back of the card. So in your <strong>ViewController.swift</strong> declare the following attributes.</p>
 <pre><code class="language-swift">class ViewController: UIViewController {
@@ -150,7 +156,7 @@ ghost.init({
     }
 </code></pre>
 <p>If you run the application now, it should just show the back of the playing card like this:</p>
-<p><img src="http://localhost:2373/content/images/2014/Jul/ios-simulator.png" alt=""></p>
+<p><img src="http://localhost:2368/content/images/2014/Jul/ios-simulator.png" alt=""></p>
 <p>Lets go and add gesture recognition to the <strong>imageView</strong> so it recognises when somebody taps on it.</p>
 <p>You need to create a <strong>UITapGestureRecognizer</strong> and pass a <strong>selector</strong> into its initializer. So to do this, you will need to modify the <strong>viewDidLoad</strong> function so that it resembles the following:</p>
 <pre><code class="language-swift">    override func viewDidLoad() {
@@ -314,7 +320,7 @@ ghost.init({
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="http://localhost:2368">
+        <a href="../">
             <span>Coding Ricky</span>
         </a>
     </div>
@@ -344,9 +350,9 @@ ghost.init({
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <section class="copyright"><a href="../">Coding Ricky</a> © 2018</section>
                 <nav class="site-footer-nav">
-                    <a href="http://localhost:2368">Latest Posts</a>
+                    <a href="../">Latest Posts</a>
                     
                     
                     <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
@@ -359,7 +365,7 @@ ghost.init({
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=36474f5acf"></script>
 
 
     <script>
