@@ -1,0 +1,398 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Using WatchKit tables</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/watchkit-tables/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/watchkit-tables/amp/">
+    
+    <meta property="og:site_name" content="Coding Ricky">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Using WatchKit tables">
+    <meta property="og:description" content="The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a">
+    <meta property="og:url" content="http://localhost:2368/watchkit-tables/">
+    <meta property="article:published_time" content="2015-04-25T12:29:19.000Z">
+    <meta property="article:modified_time" content="2015-04-25T12:33:31.000Z">
+    <meta property="article:tag" content="swift">
+    <meta property="article:tag" content="ios">
+    <meta property="article:tag" content="watchkit">
+    <meta property="article:tag" content="apple watch">
+    <meta property="article:tag" content="table">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Using WatchKit tables">
+    <meta name="twitter:description" content="The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a">
+    <meta name="twitter:url" content="http://localhost:2368/watchkit-tables/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Ricky Yim">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="swift, ios, watchkit, apple watch, table">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Coding Ricky",
+        "logo": "http://localhost:2368/favicon.ico"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Ricky Yim",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/ricky/",
+        "sameAs": []
+    },
+    "headline": "Using WatchKit tables",
+    "url": "http://localhost:2368/watchkit-tables/",
+    "datePublished": "2015-04-25T12:29:19.000Z",
+    "dateModified": "2015-04-25T12:33:31.000Z",
+    "keywords": "swift, ios, watchkit, apple watch, table",
+    "description": "The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "9652dc6d90f3"
+});
+</script>
+    <meta name="generator" content="Ghost 1.22">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+
+</head>
+<body class="post-template tag-swift tag-ios-2 tag-watchkit tag-apple-watch tag-table">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-swift tag-ios-2 tag-watchkit tag-apple-watch tag-table no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2015-04-25">25 April 2015</time>
+                        <span class="date-divider">/</span> <a href="../tag/swift/">swift</a>
+                </section>
+                <h1 class="post-full-title">Using WatchKit tables</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><p>The release of the Apple Watch has meant a whole host of possiblities for application developers. However writing apps for watches is very different to writing apps for phones. One particular area that is different is the User Interface elements. This article will explore how to display data in a table on a watch using the WatchKit components.</p>
+<p>These are the pre-requisites for this article:</p>
+<ul>
+<li>Git</li>
+<li>XCode 6.3</li>
+</ul>
+<p>The application will be a simple table showing a list of names and ages of people.</p>
+<p><img src="http://localhost:2373/content/images/2015/04/Bezel-Snapshot-2015-04-25-22-18-24.png" alt=""></p>
+<p>1.Start by checking out the src code from <a href="https://github.com/codingricky/sample-watchkit-table">https://github.com/codingricky/sample-watchkit-table</a>.</p>
+<p>2.If you go to the <strong>Interface.storyboard</strong> of WatchTable WatchKit app, you will see a very basic scene with a table.</p>
+<p><img src="http://localhost:2373/content/images/2015/04/storyboard.png" alt=""></p>
+<p>Important to note that the TableRowController has a custom class the <strong>TableRow</strong>. There are outlets attached from the labels to the <strong>TableRow</strong> class.</p>
+<p>The <strong>TableRow</strong> class looks like:</p>
+<pre><code class="language-swift">import WatchKit
+
+class TableRow: NSObject {
+    @IBOutlet weak var nameLabel: WKInterfaceLabel!   
+    @IBOutlet weak var ageLabel: WKInterfaceLabel!
+}
+</code></pre>
+<p>Also the identifier of the Table is set to <strong>tableRow</strong> which will be referenced later on.</p>
+<p>3.Open the <strong>InterfaceController</strong> class.</p>
+<p>We will define a map with some sample data that will be displayed in the watch table. Obviously you can source data from anywhere. The map is purely to simplfy things in this article.</p>
+<pre><code>    let personData = ["Taylor" : 25, "Katy" : 30, "Ellie" : 28]
+</code></pre>
+<p>4.In the <strong>willActivate()</strong> fuction we will load the data into the table.</p>
+<p>We will set the row count of the table like this.</p>
+<pre><code class="language-swift">        table.setNumberOfRows(personData.count, withRowType: "tableRow")
+</code></pre>
+<p>Notice how the row identifier <strong>tableRow</strong> is referenced.</p>
+<p>5.Lastly we load the data into the table.</p>
+<pre><code class="language-swift">   let keys = personData.keys.array
+        for (index, key) in enumerate(keys) {
+            let tableRow = table.rowControllerAtIndex(index) as! TableRow
+            tableRow.nameLabel.setText(key)
+            tableRow.ageLabel.setText(personData[key]!.description)
+        }
+</code></pre>
+<p>Now if you start the application, you will see the watch with the data loaded. You can source the data from anywhere. I hope that helps you on your way to building watch applications.</p>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/ricky/">Ricky Yim</a></h4>
+            <p>Read <a href="../author/ricky/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/ricky/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— Coding Ricky —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/swift/">swift</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../typhoon-dependency-injection-with-swift/">Typhoon - Dependency Injection with Swift</a></li>
+                            <li><a href="../swiftly-access-marvel-characters/">Swiftly access Marvel Characters</a></li>
+                            <li><a href="../flipping-cards-with-swift-and-uikit/">Flipping Cards with Swift and UIKit</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/swift/">See all 7 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-maven tag-faker tag-maven-shade no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../keeping-it-all-together-with-the-maven-shade-plugin/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">maven</span>
+                <h2 class="post-card-title">Keeping it all together with the Maven Shade Plugin</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Java Faker is an open source project that I maintain. It is a port of the Ruby faker gem and it exists to generate fake but realistic data. So we can insert phrases</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">2 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-dependency-injection tag-marvel tag-swift tag-typhoon no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../typhoon-dependency-injection-with-swift/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">Dependency Injection</span>
+                <h2 class="post-card-title">Typhoon - Dependency Injection with Swift</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Dependency Injection is a useful design pattern that allows for an application to be decoupled and it simplifies testing.  It is used in the Java world with frameworks like Spring and Guice. In</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="http://localhost:2368">
+            <span>Coding Ricky</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Using WatchKit tables</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Using%20WatchKit%20tables&amp;url=http://localhost:2368/watchkit-tables/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/watchkit-tables/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:2368">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>

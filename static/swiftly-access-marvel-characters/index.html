@@ -1,0 +1,545 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Swiftly access Marvel Characters</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/swiftly-access-marvel-characters/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/swiftly-access-marvel-characters/amp/">
+    
+    <meta property="og:site_name" content="Coding Ricky">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Swiftly access Marvel Characters">
+    <meta property="og:description" content="As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an API that allowed access to all things from their characters to comics to events. This article will show">
+    <meta property="og:url" content="http://localhost:2368/swiftly-access-marvel-characters/">
+    <meta property="article:published_time" content="2015-01-27T12:37:06.000Z">
+    <meta property="article:modified_time" content="2015-01-29T21:50:34.000Z">
+    <meta property="article:tag" content="marvel">
+    <meta property="article:tag" content="rest">
+    <meta property="article:tag" content="swift">
+    <meta property="article:tag" content="ios">
+    <meta property="article:tag" content="JSON">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Swiftly access Marvel Characters">
+    <meta name="twitter:description" content="As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an API that allowed access to all things from their characters to comics to events. This article will show">
+    <meta name="twitter:url" content="http://localhost:2368/swiftly-access-marvel-characters/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Ricky Yim">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="marvel, rest, swift, ios, JSON">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Coding Ricky",
+        "logo": "http://localhost:2368/favicon.ico"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Ricky Yim",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/ricky/",
+        "sameAs": []
+    },
+    "headline": "Swiftly access Marvel Characters",
+    "url": "http://localhost:2368/swiftly-access-marvel-characters/",
+    "datePublished": "2015-01-27T12:37:06.000Z",
+    "dateModified": "2015-01-29T21:50:34.000Z",
+    "keywords": "marvel, rest, swift, ios, JSON",
+    "description": "As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an API that allowed access to all things from their characters to comics to events. This article will show",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "9652dc6d90f3"
+});
+</script>
+    <meta name="generator" content="Ghost 1.22">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+
+</head>
+<body class="post-template tag-marvel tag-rest tag-swift tag-ios-2 tag-json">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-marvel tag-rest tag-swift tag-ios-2 tag-json no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2015-01-27">27 January 2015</time>
+                        <span class="date-divider">/</span> <a href="../tag/marvel/">marvel</a>
+                </section>
+                <h1 class="post-full-title">Swiftly access Marvel Characters</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><p>As a kid I used to devour Marvel Comics all the time. Recently with regular Marvel films coming out, there has been renewed interest in the Marvel universe. Marvel kindly released an <a href="http://developer.marvel.com/">API</a> that allowed access to all things from their characters to comics to events. This article will show how to access the Marvel API from within an iOS application written in Swift.</p>
+<p>The first thing you need to do is sign up for a developer's account at the <a href="http://developer.marvel.com/">http://developer.marvel.com/</a>. This will give you public/private keys and access to their documentation. The keys are required to access the API.</p>
+<p>My starting point was a vanilla iOS 'Single View Application'. I used <a href="http://cocoapods.org/">cocoapods</a> to setup the dependencies. For this application I chose to leverage <a href="https://github.com/daltoniam/SwiftHTTP">SwiftHttp</a> for the HTTP communications and <a href="https://github.com/daltoniam/JSONJoy-Swift">JSONJoy-Swift</a> to map the JSON response back to a Swift structure.</p>
+<p>My podfile looks like this.</p>
+<pre><code>source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.1'
+
+pod 'SwiftHTTP', :git =&gt; "https://github.com/daltoniam/SwiftHTTP.git", :tag =&gt; "0.9.1"
+pod 'JSONJoy-Swift', :git =&gt; "https://github.com/daltoniam/JSONJoy-Swift.git", :tag =&gt; "0.9.1"
+</code></pre>
+<p>Once setup, I added a simple iOS view with an UIImageView and a <strong>download</strong> button.</p>
+<p><img src="http://localhost:2373/content/images/2015/01/sample-app-1.png" alt=""></p>
+<p>What the application will do, is upon clicking the download button, we will access the API, download the details of <a href="http://en.wikipedia.org/wiki/Ant-Man">'Ant Man'</a> and set his thumbnail to the image view.</p>
+<p>1.We will access the details of 'Ant Man' via the Comic Character API. To get his details we will issue an HTTP GET request to <a href="http://gateway.marvel.com:80/v1/public/characters/">http://gateway.marvel.com:80/v1/public/characters/</a> with a few parameters:</p>
+<ul>
+<li>his name</li>
+<li>api key (the public key)</li>
+<li>ts (the timestamp or a value that changes per request)</li>
+<li>hash (an md5 hash of the ts + public key + private key)</li>
+</ul>
+<p>More details of the API can be found <a href="http://developer.marvel.com/docs#!/public/getCreatorCollection_get_0">here</a></p>
+<p>2.Define an <strong>IBAction</strong> for the download button. Within the action, we will create the HTTP request and initiate the download.</p>
+<pre><code class="language-swift">
+    @IBAction func download(sender: AnyObject) {
+
+    }
+</code></pre>
+<p>Add the import statement to the top of the <strong>ViewController</strong> file.</p>
+<pre><code class="language-swift">import SwiftHTTP
+import JSONJoy
+</code></pre>
+<p>To create a HTTP request we need to create a <strong>HTTPTask</strong>. Our first iteration of the method will look like this.</p>
+<pre><code class="language-swift">    @IBAction func download(sender: AnyObject) {
+        let name = "Ant-Man"
+        let url = "http://gateway.marvel.com:80/v1/public/characters"
+        var request = HTTPTask()
+        let publicKey = "YOUR PUBLIC KEY"
+        let ts = NSDate().timeIntervalSince1970.description
+        
+        request.GET(url, parameters: ["nameStartsWith": name, "apikey": publicKey, "ts" : ts], success: { (response: HTTPResponse) -&gt; Void in
+            println("got a response: \(response.responseObject)")
+        },{(error: NSError, response: HTTPResponse?) -&gt; Void in
+            println("got an error: \(error)")
+        })
+      }
+</code></pre>
+<p>Fill in your public key with the public key from your developer account. We're using the <strong>nameStartsWith</strong> parameter to retrieve <strong>Ant-Man</strong></p>
+<p>3.The request won't work unless we hash the private key and pass it as a parameter. To do this will need to apply an MD5 hash to the timestamp concatenated with the public key and private key. To perform an MD5 hash in Swift I used this <a href="https://gist.github.com/finder39/f6d71f03661f7147547d">gist</a> which extends the String class to add an MD5 method.</p>
+<p>So create a file called "Swift-MD5.swift" and add the contents of the <a href="https://gist.github.com/finder39/f6d71f03661f7147547d">gist</a> in there. You will need to add a bridging header file to import <strong>CommonCrypto/CommonCrypto.h</strong> which is required for the MD5 hashing.</p>
+<p>We can create a hash for our request now.</p>
+<pre><code class="language-swift">        let publicKey = "YOUR PUBLIC KEY"
+        let privateKey = "YOUR PRIVARE KEY"
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = "\(ts)\(privateKey)\(publicKey)".md5()
+</code></pre>
+<p>4.Putting this together our <strong>download</strong> function will look like this:</p>
+<pre><code class="language-swift">    @IBAction func download(sender: AnyObject) {
+        let name = "Ant-Man"
+        let url = "http://gateway.marvel.com:80/v1/public/characters"
+        var request = HTTPTask()
+        let publicKey = "YOUR PUBLIC KEY"
+        let privateKey = "YOUR PRIVARE KEY"
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = "\(ts)\(privateKey)\(publicKey)".md5()
+        
+        request.GET(url, parameters: ["nameStartsWith": name, "apikey": publicKey, "ts" : ts], success: { (response: HTTPResponse) -&gt; Void in
+            println("got a response: \(response.responseObject)")
+        },{(error: NSError, response: HTTPResponse?) -&gt; Void in
+            println("got an error: \(error)")
+        })
+      }
+</code></pre>
+<p>Starting up the application and pressing the <strong>download</strong> button will initiate the request. This will result in text outputted like below in the console.</p>
+<pre><code class="language-shell">got a response: Optional({
+    attributionHTML = "&lt;a href=\"http://marvel.com\"&gt;Data provided by Marvel. \U00a9 2015 MARVEL&lt;/a&gt;";
+    attributionText = "Data provided by Marvel. \U00a9 2015 MARVEL";
+    code = 200;
+    copyright = "\U00a9 2015 MARVEL";
+    data =     {
+        count = 2;
+        limit = 20;
+        offset = 0;
+        results =     
+        ...
+            etag = b38bb16e6d445c247e1edb3b5decde4f3caa1b2d;
+    status = Ok;
+</code></pre>
+<p>5.To do something meaningful with the output we will parse it and convert it into a struct so we can use the data. Let's define the struct class.</p>
+<p>So create a file called <strong>Character.swift</strong>. Add the fields that we will parse from the response. The file should resemble the contents below:</p>
+<pre><code class="language-swift">
+import Foundation
+import JSONJoy
+
+struct Character : JSONJoy {
+    var status: String?
+    var code: Int?
+    var thumbnail: String?
+    
+    init() {
+    }
+     
+    init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string
+        code = decoder["code"].integer
+        if let arr = decoder["data"]["results"].array {
+            let path = arr[0]["thumbnail"]["path"].string
+            let fileExtension = arr[0]["thumbnail"]["extension"].string
+            thumbnail = "\(path!).\(fileExtension!)"
+        }
+    }
+}
+
+</code></pre>
+<p>We are using <a href="https://github.com/daltoniam/JSONJoy-Swift">JSONJoy-Swift</a> to parse the response. The code takes the response according to the documentation and assigns it to the fields in the struct.</p>
+<p>Now in our download method, we need to parse the response into a <strong>Character</strong> struct.</p>
+<pre><code class="language-swift">@IBAction func download(sender: AnyObject) {
+        let name = "Ant-Man"
+        let url = "http://gateway.marvel.com:80/v1/public/characters"
+        var request = HTTPTask()
+        request.responseSerializer = JSONResponseSerializer()
+        let publicKey = "YOUR PUBLIC KEY"
+        let privateKey = "YOUR PRIVATE KEY"
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = "\(ts)\(privateKey)\(publicKey)".md5()
+        
+        request.GET(url, parameters: ["nameStartsWith": name, "apikey": publicKey, "ts" : ts, "hash": hash], success: { (response: HTTPResponse) -&gt; Void in
+            if (response.responseObject != nil) {
+                let character = Character(JSONDecoder(response.responseObject!))
+            }
+        },{(error: NSError, response: HTTPResponse?) -&gt; Void in
+            println("got an error: \(error)")
+        })
+    }
+</code></pre>
+<p>We've added the responseSerializer to be a <strong>JSONResponseSerializer</strong>. And we've converted the response to be a <strong>Character</strong> struct.</p>
+<p>6.The last piece of the puzzle is to download the <strong>thumbnail</strong> and assign it to the UIImageView. For this we will use <strong>SwiftHTTP</strong> and download the image using that. We will add a method that takes a <strong>Character</strong> struct, downloads the thumbnail and assigns it to the UIImageView. I'm not going to go into too much detail with this method as it really is about how to use <strong>SwiftHTTP</strong> as opposed to how to use the Marvel API which is the point of this article.</p>
+<pre><code class="language-swift">func downloadCharacter(character: Character) {
+        var request = HTTPTask()
+        let downloadTask = request.download(character.thumbnail!, parameters: nil, progress: {(complete: Double) in
+            println("percent complete: \(complete)")
+            }, success: {(response: HTTPResponse) in
+                println("download finished!")
+                if response.responseObject != nil {
+                    let data = NSData(contentsOfURL: response.responseObject! as NSURL)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.imageView.image = UIImage(data: data!)
+                    }
+                }
+                
+            } ,failure: {(error: NSError, response: HTTPResponse?) in
+                println("failure")
+        })
+    }
+</code></pre>
+<p>Note that the assignment of the imageView happens on the main thread. This is the correct way to update any view object.</p>
+<p>7.So if we put everything together now. We can invoke the <strong>downloadCharacter</strong> function from our <strong>download</strong> function.</p>
+<pre><code class="language-swift">@IBAction func download(sender: AnyObject) {
+        let name = "Ant-Man"
+        let url = "http://gateway.marvel.com:80/v1/public/characters"
+        var request = HTTPTask()
+        request.responseSerializer = JSONResponseSerializer()
+        let publicKey = "YOUR PUBLIC KEY"
+        let privateKey = "YOUR PRIVATE KEY"
+        let ts = NSDate().timeIntervalSince1970.description
+        let hash = "\(ts)\(privateKey)\(publicKey)".md5()
+        
+        request.GET(url, parameters: ["nameStartsWith": name, "apikey": publicKey, "ts" : ts, "hash": hash], success: { (response: HTTPResponse) -&gt; Void in
+            if (response.responseObject != nil) {
+                let character = Character(JSONDecoder(response.responseObject!))
+                self.downloadCharacter(character)
+            }
+        },{(error: NSError, response: HTTPResponse?) -&gt; Void in
+            println("got an error: \(error)")
+        })
+    }
+</code></pre>
+<p>We should be able to run our application, click download and see <strong>Ant-Man</strong> in all his glory.</p>
+<p><img src="http://localhost:2373/content/images/2015/01/iOS-Simulator-Screen-Shot-27-Jan-2015-11-21-31-pm.png" alt=""></p>
+<p>So that's it. Hopefully you have seen enough to get started using the Marvel api in a Swift application. Good luck creating your own application that uses the wonderful Marvel universe.</p>
+<p>Here are some references:</p>
+<ul>
+<li><a href="http://developer.marvel.com/">Marvel Developer API</a></li>
+<li><a href="https://github.com/codingricky/marvel-sample">Sample source code</a></li>
+<li><a href="https://gist.github.com/finder39/f6d71f03661f7147547d">Gist for MD5</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Ant-Man">Ant Man</a></li>
+<li><a href="https://github.com/daltoniam/SwiftHTTP">SwiftHttp</a></li>
+<li><a href="https://github.com/daltoniam/JSONJoy-Swift">JSONJoy-Swift</a></li>
+</ul>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/ricky/">Ricky Yim</a></h4>
+            <p>Read <a href="../author/ricky/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/ricky/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— Coding Ricky —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/marvel/">marvel</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../typhoon-dependency-injection-with-swift/">Typhoon - Dependency Injection with Swift</a></li>
+                            <li><a href="../marvels-superheroic-rest-api/">Marvel's Superheroic REST Api</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/marvel/">See all 2 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../garmins-connect-iq/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Introduction to Garmin's Connect IQ</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Late last year, Garmin announced a development platform for their wearables. This enabled software developers to build applications for Garmin watches. This opens up a whole host of possibilties in how people use</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">2 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-play-2 tag-guice tag-dependency-injection no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../dependency-injection-with-the-play-framework/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">Play</span>
+                <h2 class="post-card-title">Play-ing with Dependency Injection</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>A few months ago I wrote about the lack of Dependency Injection in Play. As part of the 2.4 release of Play, Dependency Injection has been incorporated as part of the framework.</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">1 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="http://localhost:2368">
+            <span>Coding Ricky</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Swiftly access Marvel Characters</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Swiftly%20access%20Marvel%20Characters&amp;url=http://localhost:2368/swiftly-access-marvel-characters/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/swiftly-access-marvel-characters/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:2368">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>

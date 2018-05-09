@@ -1,0 +1,469 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Marvel's Superheroic REST Api</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=0661887258">
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://localhost:2368/marvels-superheroic-rest-api/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://localhost:2368/marvels-superheroic-rest-api/amp/">
+    
+    <meta property="og:site_name" content="Coding Ricky">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Marvel's Superheroic REST Api">
+    <meta property="og:description" content="Recently Marvel comics released a REST api that allows developers to access comic book characters and their associated comics and stories. I know how cool is this! This post will take you through some sample code and show you how to get information back from their API. Here are the">
+    <meta property="og:url" content="http://localhost:2368/marvels-superheroic-rest-api/">
+    <meta property="article:published_time" content="2014-02-12T11:28:36.000Z">
+    <meta property="article:modified_time" content="2014-02-12T21:10:25.000Z">
+    <meta property="article:tag" content="marvel">
+    <meta property="article:tag" content="rest">
+    <meta property="article:tag" content="maven">
+    <meta property="article:tag" content="java">
+    <meta property="article:tag" content="api">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Marvel's Superheroic REST Api">
+    <meta name="twitter:description" content="Recently Marvel comics released a REST api that allows developers to access comic book characters and their associated comics and stories. I know how cool is this! This post will take you through some sample code and show you how to get information back from their API. Here are the">
+    <meta name="twitter:url" content="http://localhost:2368/marvels-superheroic-rest-api/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Ricky Yim">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="marvel, rest, maven, java, api">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Coding Ricky",
+        "logo": "http://localhost:2368/favicon.ico"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Ricky Yim",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "http://localhost:2368/author/ricky/",
+        "sameAs": []
+    },
+    "headline": "Marvel&#x27;s Superheroic REST Api",
+    "url": "http://localhost:2368/marvels-superheroic-rest-api/",
+    "datePublished": "2014-02-12T11:28:36.000Z",
+    "dateModified": "2014-02-12T21:10:25.000Z",
+    "keywords": "marvel, rest, maven, java, api",
+    "description": "Recently Marvel comics released a REST api that allows developers to access comic book characters and their associated comics and stories. I know how cool is this! This post will take you through some sample code and show you how to get information back from their API. Here are the",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=0661887258"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "9652dc6d90f3"
+});
+</script>
+    <meta name="generator" content="Ghost 1.22">
+    <link rel="alternate" type="application/rss+xml" title="Coding Ricky" href="http://localhost:2368/rss/">
+
+</head>
+<body class="post-template tag-marvel tag-rest tag-maven tag-java tag-api">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="http://localhost:2368">Coding Ricky</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="http://localhost:2368/">Home</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-marvel tag-rest tag-maven tag-java tag-api no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2014-02-12">12 February 2014</time>
+                        <span class="date-divider">/</span> <a href="../tag/marvel/">marvel</a>
+                </section>
+                <h1 class="post-full-title">Marvel's Superheroic REST Api</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><p>Recently Marvel comics released a <a href="https://developer.marvel.com/">REST api</a> that allows developers to access comic book characters and their associated comics and stories. I know how cool is this! This post will take you through some sample code and show you how to get information back from their API.</p>
+<p>Here are the pre-requistes needed before proceeding.</p>
+<ul>
+<li>Java 1.6 and above</li>
+<li>Maven 3</li>
+<li>An account on <a href="https://developer.marvel.com">https://developer.marvel.com</a>. This should give you a public/private key combination</li>
+</ul>
+<p>Firstly, setup a pom.xml file for maven and setup two dependencies. We will use <a href="http://beders.github.io/Resty/Resty/Overview.html">resty</a> as our HTTP client and Apache's <a href="http://commons.apache.org/proper/commons-codec/">common codec</a> to simplify the process of hashing our parameters. Create a pom.xml file that looks like the following.</p>
+<pre><code class="language-xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.github.codingricky&lt;/groupId&gt;
+    &lt;artifactId&gt;marvel-rest-client&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;name&gt;marvel-rest-client&lt;/name&gt;
+    &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+    &lt;properties&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;us.monoid.web&lt;/groupId&gt;
+            &lt;artifactId&gt;resty&lt;/artifactId&gt;
+            &lt;version&gt;0.3.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;commons-codec&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-codec&lt;/artifactId&gt;
+            &lt;version&gt;1.9&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;
+
+</code></pre>
+<p>Now that the dependencies are set, let's create a simple REST client that exercises one of the services. Realistically if you can interact with one end point, you should be able to apply the same technique to interact with the others.</p>
+<h2 id="understandingtheurlstructure">Understanding the URL structure</h2>
+<p>From the <a href="http://developer.marvel.com/documentation/">documentation</a>, the url to get all the characters is this <a href="http://gateway.marvel.com/v1/public/characters">http://gateway.marvel.com/v1/public/characters</a>. We can't call this directly, we will need to pass in a few extra parameters for authorisation purposes.</p>
+<p>Our url needs to look something like this:</p>
+<p><a href="http://gateway.marvel.com/v1/public/characters?timeStamp=">http://gateway.marvel.com/v1/public/characters?timeStamp=</a><strong>timeStamp</strong>&amp;apiKey=<strong>apiKey</strong>&amp;hash=<strong>hash</strong></p>
+<p>Except the parameters need to be replaced with real values.</p>
+<p>Let's breakdown the extra parameters we are passing in.</p>
+<table>
+<tr>
+	<td>Parameter</td>
+	<td>Value</td>
+</tr>
+<tr>
+	<td>timeStamp</td>
+    <td>a timestamp (or other long string which can change on a request-by-request basis)</td>
+</tr>
+<tr>
+	<td>apiKey</td>
+    <td>Your Public Key</td>
+</tr>
+<tr>
+	<td>hash</td>
+    <td>md5 hash of the following fields concatenated (timeStamp + privateKey + publicKey)</td>
+</tr>
+</table>
+<p>Given the fact that we understand how requests need to be formulated, let's create a very simple REST client that invokes this service.</p>
+<h2 id="restclient">REST Client</h2>
+<p>Let's create the src directory structure.</p>
+<pre><code class="language-shell">mkdir -p src/main/java
+</code></pre>
+<p>Now create a file with the path <em>src/main/java/RestClient.java</em> with the following contents.</p>
+<pre><code class="language-java">import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import us.monoid.web.Resty;
+
+public class RestClient {
+    public static void main(String[] args) throws IOException {
+        String publicKey = args[0];
+        String privateKey = args[1];
+        long timeStamp = System.currentTimeMillis();
+        int limit = 5;
+
+        String stringToHash = timeStamp + privateKey + publicKey;
+        String hash = DigestUtils.md5Hex(stringToHash);
+
+        String url = String.format("http://gateway.marvel.com/v1/public/characters?ts=%d&amp;apikey=%s&amp;hash=%s&amp;limit=%d", timeStamp, publicKey, hash, limit);
+        String output = new Resty().text(url).toString();
+        System.out.println(output);
+    }
+}
+</code></pre>
+<p>The following points need to be made about the code above.</p>
+<ul>
+<li>The public key and private key are passed into the client program as the first and second argument respectively</li>
+<li>The timestamp used is just the System time, so <em>System.currentTimeMillis()</em></li>
+<li>The DigestUtils from <em>common-codec</em> is used to hash the concatenated string</li>
+<li>A limit of 5 is set to restrict the amount of data coming back</li>
+<li>A simple text string is returned from the request and printed out to the console</li>
+</ul>
+<p>With all this done, you should be able to compile and run it.</p>
+<pre><code class="language-shell">$ mvn clean install
+$ java -classpath target/*.jar RestClient &lt;your public key&gt; &lt;your private key&gt; 
+</code></pre>
+<p>If this runs correctly, you should receive output like the following. I've truncated the output for brevity's sake.</p>
+<pre><code class="language-shell">{"code":200,"status":"Ok","etag":"3c514a4e7be956726463f441e6f28a64c23b12e6","data":{"offset":0,"limit":5,"total":1402,"count":5,"results":[{"id":1009521,"name":" Hank Pym",
+...
+
+</code></pre>
+<p>Hopefully this post showed you the first steps towards integrating with the Marvel REST API. Good luck with making your Marvel super hero charged applications!</p>
+<p>If you need any further assistance, the Marvel <a href="http://developer.marvel.com/documentation/">documentation</a> is actually quite comprehensive and should be your first port of call.</p>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/ricky/">Ricky Yim</a></h4>
+            <p>Read <a href="../author/ricky/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/ricky/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— Coding Ricky —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/marvel/">marvel</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../typhoon-dependency-injection-with-swift/">Typhoon - Dependency Injection with Swift</a></li>
+                            <li><a href="../swiftly-access-marvel-characters/">Swiftly access Marvel Characters</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/marvel/">See all 2 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-java tag-jdk tag-jenv no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../jenv/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">java</span>
+                <h2 class="post-card-title">Running Multiple JDKs on OSX</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>I often need to have multiple versions of Java installed on my machine. Some projects I work on use an older version of Java (for e.g, 1.6), whilst I also like</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">2 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-leap-motion tag-breakout tag-hack-day no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../leapmotion/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">Leap Motion</span>
+                <h2 class="post-card-title">Leaping into Breakout!</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>As part of my company's inaugural Hack Day, I decided to finally do something with the Leap Motion toy that had been sitting on my desk for quite some time. For the uninitiated,</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Ricky Yim
+                    </div>
+
+                        <a href="../author/ricky/" class="static-avatar"><img class="author-profile-image" src="http://www.gravatar.com/avatar/8eddbc37dcb9a518b0a370c977509fde?s=250&amp;d=mm&amp;r=x" alt="Ricky Yim"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="http://localhost:2368">
+            <span>Coding Ricky</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Marvel's Superheroic REST Api</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Marvel's%20Superheroic%20REST%20Api&amp;url=http://localhost:2368/marvels-superheroic-rest-api/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/marvels-superheroic-rest-api/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:2368">Coding Ricky</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:2368">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=0661887258"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>
